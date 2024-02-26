@@ -35,9 +35,10 @@ npm i concurrently
 แก้ start to dev ในหน้า package.json เพื่อให้ run dev แล้วใช้พวกคำสั่ง นี่ในคำสั่งเดียว(   "dev": "concurrently \"cd client && npm run dev\" \"cd server && npm run dev\" " )
 ----------------------------------------- server--------------------------------------------ทำหน้า server
 npm install mongoose
-cd..
+cd.. ไปยังหน้าหลัก
 npm init -y
 cd server
+npm i npm i bcryptjs
 npm i express mongoose dotenv
 npm install -D nodemon
 npm start
