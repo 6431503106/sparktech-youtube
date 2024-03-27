@@ -67,6 +67,10 @@ const OrderSchema = mongoose.Schema(
     deliveredAt: {
       type: Date,
     },
+    orderNo: {
+      type: String, // กำหนดชนิดของข้อมูลเป็น String
+      required: true, // กำหนดให้เป็นข้อมูลที่ต้องระบุ
+    },
   },
   {
     timestamps: true,

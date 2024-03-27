@@ -79,7 +79,7 @@ export default function ProductScreen() {
                     </div>
                 </div>
             )}
-            <div className="mt-8">
+            {/*<div className="mt-8">
                 <h2 className="text-xl font-semibold">Customer Reviews</h2>
                 <div className="mt-4">
                     <ul>
@@ -133,7 +133,7 @@ export default function ProductScreen() {
                     <h3 className="text-lg font-semibold">Write a Review</h3>
                     <p className="text-gray-700">Please <Link to="/login" className="text-blue-500 hover:underline">log in</Link> to write a review.</p>
                 </div>
-            </div>
+                            </div>*/}
         </div>
     )
 }
