@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { useAddMutation } from '../slices/userApiSlice';
+import { useAddMutation } from '../../slices/userApiSlice';
 import { toast } from 'react-toastify';
-import { setCredentials } from '../slices/userSlice'
+import { setCredentials } from '../../slices/userSlice'
 import { useDispatch } from 'react-redux';
 
 export default function AddScreen() {

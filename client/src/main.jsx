@@ -23,8 +23,7 @@ import ProductListScreen from './screens/admin/ProductListScreen.jsx'
 import OrderListScreen from './screens/admin/OrderListScreen.jsx'
 import ProductEditScreen from './screens/admin/ProductEditScreen.jsx'
 import UserEditScreen from './screens/admin/UserEditScreen.jsx'
-import AddScreen from './screens/AddScreen.jsx'
-
+import AddScreen from './screens/admin/AddScreen.jsx';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={< App />}>
@@ -40,7 +39,6 @@ const router = createBrowserRouter(
         <Route path='/shipping' element={<ShippingScreen />} />
         <Route path='/place-order' element={<PlaceOrderScreen />} />
         <Route path='/order/:id' element={<OrderScreen />} />
-        <Route path='/add' element={<AddScreen />} />
         <Route path='/profile' element={<ProfileScreen />} />
         <Route path='/success-screen' element={<SuccessScreen />} />
       </Route>
@@ -51,6 +49,7 @@ const router = createBrowserRouter(
         <Route path='/admin/products' element={<ProductListScreen />} />
         <Route path='/admin/orders' element={<OrderListScreen />} />
         <Route path='/admin/product/:id/edit' element={<ProductEditScreen />} />
+        <Route path='/admin/add' element={<AddScreen />} />
       </Route>
     </Route>
   )

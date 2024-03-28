@@ -111,11 +111,19 @@ const handleLogin = async () => {
                             Products
                         </Link>
                     </li>
+<<<<<<< HEAD
                     {<li>
+=======
+                    <li>
+>>>>>>> 805094443f821ece5007225c3edc000b6e568771
                         <Link to="/admin/orders">
-                            Orders
+                         Request
                         </Link>
+<<<<<<< HEAD
                     </li>}
+=======
+                    </li>
+>>>>>>> 805094443f821ece5007225c3edc000b6e568771
                 </ul>
             </>
         )
@@ -160,11 +168,11 @@ const handleLogin = async () => {
                 </div>
                 
                 <div  className="hidden sm:flex items-center space-x-4">
-                    {/*<Link to="/cart" className="text-white flex items-center">
+                    <Link to="/cart" className="text-white flex items-center">
                         <FiShoppingCart className="mr-1" />
                         Cart
                         <span className='bg-blue-500 text-white rounded-full px-2 py-1 ml-2'>{cartItems.length}</span>
-                    </Link>*/}
+                    </Link>
 
                     {userInfo && <div className="relative group">
                         {renderProfileButton()}

@@ -10,7 +10,11 @@
   "license": "ISC",
   "dependencies": {
     "concurrently": "^8.2.2",
+<<<<<<< HEAD
     "mongoose": "^8.2.0"
+=======
+    "shortid": "^2.2.16"
+>>>>>>> 805094443f821ece5007225c3edc000b6e568771
   },
   "description": "cd client ไปยังโปรเจคหลักเรา\r 1. ลบ node_module(ไม่มีก็ข้ามขั้นตอน เพราะยังไม่ได้ติดตั้ง nodejs)\r npm install\r npm i\r npm install -D tailwindcss postcss autoprefixer\r npx tailwindcss init\r ใส่โค้ดนี้ที่หน้า  tailwindcss.config.js\r /** @type {import('tailwindcss').Config} */\r export default {\r   content: [\"./src/**/*.{js, jxs, tsx, ts}\"],\r   theme: {\r     extend: {},\r   },\r   plugins: [],\r }\r ----------------\r ใส่นี้ที่ไฟล์ postcss').config.js เพื่อเรียกใช้\r export default {\r   plugins: {\r     tailwindcss: {},\r     autoprefixer: {},\r   },\r }\r ----------------\r ใส่โค้ดนี่ในหน้า index.css หรือหน้า เมนของ css\r @tailwind base;\r @tailwind components;\r @tailwind utilities;\r ----------------\r npm i react-router-dom react-icons\r npm run dev\r ----------------\r cd.. ให้มาหน้าsparktech-youtube\r npm i concurrently\r แก้ start to dev ในหน้า package.json เพื่อให้ run dev แล้วใช้พวกคำสั่ง นี่ในคำสั่งเดียว(   \"dev\": \"concurrently \\\"cd client && npm run dev\\\" \\\"cd server && npm run dev\\\" \" )\r ----------------------------------------- server--------------------------------------------ทำหน้า server\r npm install mongoose\r cd..\r npm init -y\r cd server\r npm i express mongoose dotenv\r npm install -D nodemon\r npm start\r npm i jsonwebtoken ในหน้า controllers import jwt from 'jsonwebtoken'\r npm install passport-google-oauth20 express-session passport axios",
   "repository": {

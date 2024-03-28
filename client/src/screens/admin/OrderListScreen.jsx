@@ -25,6 +25,10 @@ export default function OrderListScreen() {
               <th className="border border-gray-300 py-2 px-4 sm:px-6 md:px-8">ID</th>
               <th className="border border-gray-300 py-2 px-4 sm:px-6 md:px-8">User</th>
               <th className="border border-gray-300 py-2 px-4 sm:px-6 md:px-8">Date</th>
+<<<<<<< HEAD
+=======
+              <th className="border border-gray-300 py-2 px-4 sm:px-6 md:px-8">Total</th>
+>>>>>>> 805094443f821ece5007225c3edc000b6e568771
               <th className="border border-gray-300 py-2 px-4 sm:px-6 md:px-8">Delivered</th>
               <th className="border border-gray-300 py-2 px-4 sm:px-6 md:px-8">Actions</th>
             </tr>
@@ -35,6 +39,10 @@ export default function OrderListScreen() {
                 <td className='border border-gray-300 py-2 px-4 sm:px-6 md:px-8'>{order._id}</td>
                 <td className='border border-gray-300 py-2 px-4 sm:px-6 md:px-8'>{order.user?.name}</td>
                 <td className='border border-gray-300 py-2 px-4 sm:px-6 md:px-8'>{order.createdAt.slice(0, 10)}</td>
+<<<<<<< HEAD
+=======
+                <td className='border border-gray-300 py-2 px-4 sm:px-6 md:px-8'>${order.totalPrice}</td>
+>>>>>>> 805094443f821ece5007225c3edc000b6e568771
                 <td className='border border-gray-300 py-2 px-4 sm:px-6 md:px-8'>{order.isDelivered ? "Yes" : "No"}</td>
                 <td className='border border-gray-300 py-2 px-4 sm:px-6 md:px-8'>
                   <Link to={`/order/${order._id}`}>

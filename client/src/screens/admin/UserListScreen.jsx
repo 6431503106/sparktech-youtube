@@ -37,7 +37,7 @@ export default function UserListScreen() {
             <h2 className="text-2xl font-semibold mb-4">Users</h2>
             <button
                 className="bg-blue-500 text-white px-4 py-2 rounded-md mb-4"
-                onClick={() => navigate("/add" )}
+                onClick={() => navigate("/admin/add" )}
             >
                 Create New User
                 </button>

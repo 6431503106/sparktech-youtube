@@ -25,6 +25,11 @@ export default function ShippingScreen() {
         navigate("/cart")
     }
 
+    const handleCancel = () => {
+        // ยกเลิกการกรอกข้อมูลและกลับไปยังหน้าหลักหรือหน้าก่อนหน้านี้
+        navigate("/cart")
+    }
+
     return (
         <div className="container mx-auto mt-8 mb-28 p-4 max-w-md ">
             <h3 className="text-3xl font-semibold mb-4">Information</h3>

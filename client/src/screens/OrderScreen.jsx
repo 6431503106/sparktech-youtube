@@ -48,18 +48,32 @@ export default function OrderScreen() {
             <div className="md:w-2/3 p-4">
                 <h2 className="text-3xl font-semibold mb-4">Details</h2>
                 <div className="mb-4">
+<<<<<<< HEAD
                     <h3 className="text-lg font-semibold mb-2">Request ID:</h3>
                     <p>{orderId}</p>
                 </div>
                 <div className="mb-4">
                     <h3 className="text-lg font-semibold mb-2">Borrowing information:</h3>
+=======
+                    <h3 className="text-lg font-semibold mb-2">Order Number:</h3>
+                    <p>{orderId}</p>
+                </div>
+                <div className="mb-4">
+                    <h3 className="text-lg font-semibold mb-2">Shipping Details:</h3>
+                    <p>Name: {user.name}</p>
+>>>>>>> 805094443f821ece5007225c3edc000b6e568771
                     <p>Email: {user.email}</p>
                     <p>Username: {user.name}</p>
                     <p>Reason: {shippingAddress.address}</p>
                 </div>
                 <div className="mb-4">
+<<<<<<< HEAD
                     <h3 className="text-lg font-semibold mb-2">Borrowing Status:</h3>
                     <p className={isDelivered ? "text-green-500 font-semibold" : "text-red-500 font-semibold"}>{isDelivered ? "Confirm to Borrowed" : "Not Confirm"}</p>
+=======
+                    <h3 className="text-lg font-semibold mb-2">Order Status:</h3>
+                    <p className={isDelivered ? "text-green-500 font-semibold" : "text-red-500 font-semibold"}>{isDelivered ? "Delivered" : "Not Delivered"}</p>
+>>>>>>> 805094443f821ece5007225c3edc000b6e568771
                 </div>
             </div>
 
@@ -87,12 +101,19 @@ export default function OrderScreen() {
                 <div className="mt-4">
                     <p className="text-right font-semibold">Total: ${+calculateTotal(orderItems).toFixed(2) + +shippingPrice + +taxPrice}</p>
                 </div>
+                <button
+                    className="bg-blue-500 text-white px-4 py-2 rounded-md mt-4 hover:bg-blue-600 mr-3"
+                    onClick={() => handleStripePayment(orderItems)}
+                >
+                    Pay with Stripe
+                </button>
                 {userInfo.isAdmin && !order.isDelivered && <button
                     className="bg-gray-800 text-white px-4 py-2 rounded-md mt-4 hover:bg-gray-950"
                     onClick={() => deliverOrderHandler(orderId)}
                 >
-                    Confirm Borrow
+                    Mark as Delivered
                 </button>}
+                {loadingStripe && <Spinner />}
             </div>
         </div >
     )
