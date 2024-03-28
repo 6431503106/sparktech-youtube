@@ -23,8 +23,9 @@ export default function ProductListScreen() {
 
     const handleSearchFilter = () => {
         const searchValue = keyword.toLowerCase();
-        const filteredProducts = products.filter(product => 
-            product.name.toLowerCase().includes(searchValue)
+        const filteredProducts = products.filter 
+        (product => 
+            product.name.toLowerCase().includes(searchValue) || product._id.toLowerCase().includes(searchValue)
         );
         setFilteredProducts(filteredProducts);
     }  
@@ -85,7 +86,7 @@ export default function ProductListScreen() {
             </div>
         </div>
         <button
-            className="bg-blue-500 text-white px-4 py-2 rounded-md mb-4 "
+            className="bg-blue-500 text-white px-4 py-2 rounded-md mb-6 "
             onClick={createProductHandler}
         >
             Create Product
@@ -97,14 +98,11 @@ export default function ProductListScreen() {
             <table className="min-w-full divide-y divide-gray-200">
                 <thead>
                     <tr>
-                    <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                            Product No.
-                        </th>
                         <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                             Product
                         </th>
                         <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                            Product Code
+                            Product ID
                         </th>
                         <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                             Quantity
@@ -120,7 +118,6 @@ export default function ProductListScreen() {
                 <tbody className="bg-white divide-y divide-gray-200">
                     {filteredProducts?.map((product, index) => (
                         <tr key={product._id}>
-                            <td className='px-12 py-3 whitespace-nowrap'>{index + 1}</td>
                             <td className='px-7 py-3 whitespace-nowrap'>
                             <img src={product.image} alt={product.name} className="w-20 h-15 object-cover mr-4" />
                                 <div className="flex flex-col">

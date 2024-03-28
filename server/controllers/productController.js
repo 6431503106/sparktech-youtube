@@ -1,7 +1,6 @@
 import Product from "../models/productModel.js"
 import asyncHandler from "express-async-handler"
 
-
 const getProducts = asyncHandler(async (req, res) => {
   const keyword = req.query.keyword
     ? {

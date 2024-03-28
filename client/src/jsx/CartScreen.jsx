@@ -3,7 +3,7 @@ const CartScreen = () => {
     return (
         <div className="flex flex-col md:flex-row justify-center items-start">
             <div className="md:w-2/3 p-4">
-                <h2 className="text-2xl font-semibold mb-4">Add to Cart</h2>
+                <h2 className="text-2xl font-semibold mb-4">List Of Products</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 </div>
             </div>

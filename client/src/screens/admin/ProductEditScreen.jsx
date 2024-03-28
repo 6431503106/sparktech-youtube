@@ -1,64 +1,87 @@
-import React, { useState } from 'react'
-import { useGetProductDetailsQuery, useUpdateProductMutation, useUploadFileHandlerMutation } from '../../slices/productsApiSlice'
-import { toast } from 'react-toastify'
-import { useNavigate, useParams } from 'react-router-dom'
-import Spinner from '../../components/Spinner'
+import React, { useState, useEffect } from 'react';
+import { useGetProductDetailsQuery, useUpdateProductMutation, useUploadFileHandlerMutation } from '../../slices/productsApiSlice';
+import { toast } from 'react-toastify';
+import { useNavigate, useParams } from 'react-router-dom';
+import Spinner from '../../components/Spinner';
 
 export default function ProductEditScreen() {
-    const { id: productId } = useParams()
-    const { data: product, isLoading: loadingProduct, error } = useGetProductDetailsQuery(productId)
-    const [updateProduct, { isLoading: loadingupdate }, refetch] = useUpdateProductMutation()
-    const [uploadProductImage, { isLoading: uploadLoading }] = useUploadFileHandlerMutation()
+    const { id: productId } = useParams();
+    const { data: product, isLoading: loadingProduct, error } = useGetProductDetailsQuery(productId);
+    const [updateProduct, { isLoading: loadingUpdate }, refetch] = useUpdateProductMutation();
+    const [uploadProductImage, { isLoading: uploadLoading }] = useUploadFileHandlerMutation();
 
-    console.log(product)
-
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const [productData, setProductData] = useState({
-        name: product?.name,
-        image: product?.image,
-        brand: product?.brand,
-        category: product?.category,
-        countInStock: product?.countInStock,
-        description: product?.description
-    })
+        name: '',
+        image: '',
+        brand: '',
+        category: '',
+        countInStock: '',
+        description: ''
+    });
 
-    const { name, image, brand, category, countInStock, description } = productData
+    useEffect(() => {
+        if (!loadingProduct && product) {
+            setProductData({
+                name: product.name || '',
+                image: product.image || '',
+                brand: product.brand || '',
+                category: product.category || '',
+                countInStock: product.countInStock || '',
+                description: product.description || ''
+            });
+        }
+    }, [loadingProduct, product]);
+
+    const { name, image, brand, category, countInStock, description } = productData;
 
     const handleInputChange = e => {
-        const { name, value } = e.target
+        const { name, value } = e.target;
         setProductData({
             ...productData,
             [name]: value
-        })
-    }
+        });
+    };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
+    const handleSubmit = async e => {
+        e.preventDefault();
         try {
             await updateProduct({
-                productId, name, image, brand, category, countInStock, description
-            }).unwrap()
-            toast.success("Product Updated")
-            navigate("/admin/products")
-            refetch()
+                productId,
+                name,
+                image,
+                brand,
+                category,
+                countInStock,
+                description
+            }).unwrap();
+            toast.success("Product Updated");
+            navigate("/admin/products");
+            refetch();
         } catch (error) {
-            toast.error(error?.data?.message || error?.error)
+            toast.error(error?.data?.message || error?.error);
         }
-    }
+    };
 
     const uploadFileHandler = async e => {
-        const formData = new FormData()
-        formData.append('image', e.target.files[0])
+        const formData = new FormData();
+        formData.append('image', e.target.files[0]);
         try {
-            const res = await uploadProductImage(formData).unwrap()
-            toast.success(res.message)
+            const res = await uploadProductImage(formData).unwrap();
+            toast.success(res.message);
             setProductData({
                 ...productData,
                 image: res.image
-            })
+            });
         } catch (error) {
-            toast.error(error?.data?.message || error?.error)
+            toast.error(error?.data?.message || error?.error);
         }
+    };
+
+    if (loadingProduct) return <Spinner />;
+    if (error) {
+        toast.error(error?.data?.message || error?.error);
+        return null;
     }
 
     return (
