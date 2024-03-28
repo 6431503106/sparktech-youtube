@@ -71,10 +71,10 @@ const handleLogin = async () => {
                         } bg-gray-800 p-2 mt-2 space-y-2 text-white border rounded-md`}
                 >
                     <li>
-                        {/*<Link to="/profile">
+                        {<Link to="/profile">
                             <FiUser className="mr-1" />
                             Profile
-                        </Link>*/}
+                        </Link>}
                     </li>
                     <li>
                         {<Link onClick={handleLogout}>
@@ -111,11 +111,11 @@ const handleLogin = async () => {
                             Products
                         </Link>
                     </li>
-                    {/*<li>
+                    {<li>
                         <Link to="/admin/orders">
                             Orders
                         </Link>
-                    </li>*/}
+                    </li>}
                 </ul>
             </>
         )
@@ -142,6 +142,7 @@ const handleLogin = async () => {
         <nav className="bg-gray-800 p-4">
             <div className="flex items-center justify-between">
                 <div className="flex items-center">
+                <img src="../../public/images/icon.png" alt="Logo" className="logo mr-3" style={{ width: '40px', height: '40px' }} />
                     <Link to="/" className="text-white text-2xl font-extrabold">
                         SE LAB
                     </Link>

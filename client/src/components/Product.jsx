@@ -11,7 +11,6 @@ export default function Product({ product }) {
                     <span className="text-yellow-500 mr-1">{product.rating}</span>
                     <span className="text-gray-500">({product.numReviews} reviews)</span>
                 </div>
-                <p className="mt-2 text-gray-700">${product.price.toFixed(2)}</p>
             </div>
         </Link>
     )

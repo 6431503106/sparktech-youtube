@@ -45,7 +45,7 @@ export default function ProductScreen() {
             {isLoading ? (<Spinner />) : error ? toast.error(error?.data?.message || error?.error) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="md:col-span-1">
-                        <img src={product.image} alt={product.name} className="w-full h-auto" />
+                        <img style={{ width: '500px', height: '500px' }}src={product.image} alt={product.name} className="w-full h-auto" />
                     </div>
                     <div className="md:col-span-1">
                         <h1 className="text-2xl font-semibold">{product.name}</h1>
@@ -54,7 +54,7 @@ export default function ProductScreen() {
                             <span className="text-yellow-500 mr-1">{product.rating}</span>
                             <span className="text-gray-500">({product.numReviews} reviews)</span>
                         </div>
-                        <p className="text-gray-700 mt-2">${product?.price?.toFixed(2)}</p>
+                        
                         <p className="text-gray-700 mt-2">In Stock: {product.countInStock}</p>
                         <div className="mt-4">
                             <label htmlFor="quantity" className="text-gray-700">Quantity:</label>
@@ -74,7 +74,7 @@ export default function ProductScreen() {
                             className="bg-yellow-500 text-white px-4 py-2 rounded-md mt-4 hover:bg-yellow-600"
                             onClick={addtoCartHandler}
                         >
-                            Add to Cart
+                            Borrow
                         </button>
                     </div>
                 </div>

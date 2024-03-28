@@ -60,14 +60,15 @@ export default function UserListScreen() {
                                 <td className="border border-gray-300 py-2 px-4 sm:px-6 md:px-8">{user.name}</td>
                                 <td className="border border-gray-300 py-2 px-4 sm:px-6 md:px-8">{user.email}</td>
                                 <td className="border border-gray-300 py-2 px-4 sm:px-6 md:px-8">{user.isAdmin ? "Admin" : "User"}</td>
-                                {!user.isAdmin && <td className="border border-gray-300 py-2 px-4 sm:px-6 md:px-8">
+                                
+                                <td className="border border-gray-300 py-2 px-4 sm:px-6 md:px-8">
                                     <button className='text-blue-500 hover:text-blue-700 mr-2'
                                         onClick={() => navigate(`/admin/users/${user._id}/edit`)}
                                     >Editt</button>
                                     <button className='text-red-500 hover:text-red-700'
                                         onClick={() => onDelete(user._id)}
                                     >Delete</button>
-                                </td>}
+                                </td>
                             </tr>
                         ))}
                     </tbody>

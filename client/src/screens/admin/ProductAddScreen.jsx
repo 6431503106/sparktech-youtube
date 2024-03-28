@@ -1,69 +1,57 @@
-import React, { useState } from 'react'
-import { useGetProductDetailsQuery, useUpdateProductMutation, useUploadFileHandlerMutation } from '../../slices/productsApiSlice'
-import { toast } from 'react-toastify'
-import { useNavigate, useParams } from 'react-router-dom'
-import Spinner from '../../components/Spinner'
+import React, { useState } from 'react';
+import { toast } from 'react-toastify';
+import Spinner from '../../components/Spinner';
+import { useCreateProductMutation, useUploadFileHandlerMutation } from '../../slices/productsApiSlice';
+import { useNavigate } from 'react-router-dom';
 
-export default function ProductEditScreen() {
-    const { id: productId } = useParams()
-    const { data: product, isLoading: loadingProduct, error } = useGetProductDetailsQuery(productId)
-    const [updateProduct, { isLoading: loadingupdate }, refetch] = useUpdateProductMutation()
-    const [uploadProductImage, { isLoading: uploadLoading }] = useUploadFileHandlerMutation()
-
-    console.log(product)
-
-    const navigate = useNavigate()
+export default function ProductAddScreen() {
+    const navigate = useNavigate();
     const [productData, setProductData] = useState({
-        name: product?.name,
-        image: product?.image,
-        brand: product?.brand,
-        category: product?.category,
-        countInStock: product?.countInStock,
-        description: product?.description
-    })
+        name: '',
+        image: '',
+        brand: '',
+        category: '',
+        countInStock: 0,
+        description: ''
+    });
 
-    const { name, image, brand, category, countInStock, description } = productData
+    const { name, image, brand, category, countInStock, description } = productData;
+    const [createProduct, { isLoading: loadingCreate }] = useCreateProductMutation();
+    const [uploadProductImage, { isLoading: uploadLoading }] = useUploadFileHandlerMutation();
 
     const handleInputChange = e => {
-        const { name, value } = e.target
+        const { name, value } = e.target;
         setProductData({
             ...productData,
             [name]: value
-        })
-    }
+        });
+    };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
+    const handleSubmit = async e => {
+        e.preventDefault();
         try {
-            await updateProduct({
-                productId, name, image, brand, category, countInStock, description
-            }).unwrap()
-            toast.success("Product Updated")
-            navigate("/admin/products")
-            refetch()
+            const formData = new FormData();
+            formData.append('image', image);
+            await uploadProductImage(formData).unwrap();
+            await createProduct({ name, image, brand, category, countInStock, description }).unwrap();
+            toast.success("Product Created");
+            navigate("/admin/products"); // นำทางไปยังหน้า ProductListScreen
         } catch (error) {
-            toast.error(error?.data?.message || error?.error)
+            toast.error(error?.data?.message || error?.error);
         }
-    }
+    };
 
-    const uploadFileHandler = async e => {
-        const formData = new FormData()
-        formData.append('image', e.target.files[0])
-        try {
-            const res = await uploadProductImage(formData).unwrap()
-            toast.success(res.message)
-            setProductData({
-                ...productData,
-                image: res.image
-            })
-        } catch (error) {
-            toast.error(error?.data?.message || error?.error)
-        }
-    }
+    const handleFileChange = async e => {
+        const file = e.target.files[0];
+        setProductData({
+            ...productData,
+            image: file
+        });
+    };
 
     return (
         <div className='w-1/3 mx-auto'>
-            <h2 className="text-2xl font-semibold mb-4">Edit Product</h2>
+            <h2 className="text-2xl font-semibold mb-4">Add Product</h2>
             <form onSubmit={handleSubmit}>
                 <div className="mb-4">
                     <label htmlFor="name" className="block font-medium">
@@ -87,7 +75,7 @@ export default function ProductEditScreen() {
                         id="image"
                         name="image"
                         accept='image/*'
-                        onChange={uploadFileHandler}
+                        onChange={handleFileChange}
                         className="w-full border border-gray-300 p-2 rounded-md"
                     />
                 </div>
@@ -147,11 +135,13 @@ export default function ProductEditScreen() {
                         className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
                         onClick={handleSubmit}
                     >
-                        Update Product
+                        Add Product
                     </button>
+                    {loadingCreate && <Spinner />}
                     {uploadLoading && <Spinner />}
                 </div>
             </form>
         </div>
+        
     )
 }

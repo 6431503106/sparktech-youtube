@@ -17,16 +17,21 @@ export default function ShippingScreen() {
     const handleSubmit = e => {
         e.preventDefault()
         dispatch(saveShippingAddress({ address, city, postalCode, country }))
-        navigate("/payment")
+        navigate("/place-order")
+    }
+
+    const handleCancel = () => {
+        // ยกเลิกการกรอกข้อมูลและกลับไปยังหน้าหลักหรือหน้าก่อนหน้านี้
+        navigate("/cart")
     }
 
     return (
         <div className="container mx-auto mt-8 mb-28 p-4 max-w-md ">
-            <h3 className="text-3xl font-semibold mb-4">Shipping</h3>
+            <h3 className="text-3xl font-semibold mb-4">Information</h3>
             <form onSubmit={handleSubmit}>
                 <div className="mb-4">
                     <label htmlFor="address" className="text-gray-700">
-                        Address:
+                        Reason:
                     </label>
                     <input
                         type="text"
@@ -76,12 +81,20 @@ export default function ShippingScreen() {
                         onChange={e => setCountry(e.target.value)}
                     />
                 </div>
-                <button
-                    className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-6000"
-                    onClick={handleSubmit}
-                >
-                    Continue to Payment
-                </button>
+                <div className="flex justify-between">
+                    <button
+                        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-6000"
+                        onClick={handleSubmit}
+                    >
+                        Continue
+                    </button>
+                    <button
+                        className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400"
+                        onClick={handleCancel}
+                    >
+                        Cancel
+                    </button>
+                </div>
             </form>
         </div>
     )

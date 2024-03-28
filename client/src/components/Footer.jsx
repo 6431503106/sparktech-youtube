@@ -5,7 +5,7 @@ export default function Footer() {
     return (
         <footer className=' bg-gray-800 text-white py-3'>
             <div className="container mx-auto text-center">
-                <p className='text-sm'> XXXX&copy; {currentYear}</p>
+                <p className='text-sm'> For SE &copy; {currentYear}</p>
             </div>
         </footer>
     )

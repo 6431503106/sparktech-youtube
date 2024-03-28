@@ -56,7 +56,6 @@ export default function PlaceOrderScreen() {
                         <tr>
                             <th className="text-left">Product</th>
                             <th className="text-right">Quantity</th>
-                            <th className="text-right">Price</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -64,7 +63,6 @@ export default function PlaceOrderScreen() {
                             <tr key={item._id} className='border-b border-gray-400'>
                                 <td className="text-left">{item.name}</td>
                                 <td className="text-right">{item.qty}</td>
-                                <td className="text-right">${(item.price * item.qty).toFixed(2)}</td>
                             </tr>
                         ))}
                         <tr className="border-b border-gray-400">
