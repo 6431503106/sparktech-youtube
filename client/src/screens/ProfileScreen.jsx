@@ -6,6 +6,7 @@ import { toast } from 'react-toastify'
 import { setCredentials } from '../slices/userSlice'
 import Spinner from '../components/Spinner'
 import { addOrderItems } from '../../../server/controllers/orderController'
+import { Link } from 'react-router-dom';
 
 export default function ProfileScreen() {
     const dispatch = useDispatch()
@@ -99,23 +100,28 @@ export default function ProfileScreen() {
                 </form>
             </div>
             <div className="w-3/4 p-4">
-                <h2 className="text-xl font-semibold mb-4">Your Orders</h2>
-                <table className="w-full border-collapse">
+                <h2 className="text-xl font-semibold mb-4">Your borrowing</h2>
+                <table className="min-w-full border-collapse border border-gray-300">
                     <thead>
                         <tr>
-                            <th className="border p-2">Order ID</th>
+                            <th className="border p-2">ID</th>
                             <th className="border p-2">Date</th>
-                            <th className="border p-2">Total</th>
                             <th className="border p-2">Status</th>
+                            <th className="border p-2">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         {userOrders?.map(order => (
-                            <tr key={order._id}>
+                            <tr key={order._id} className='text-center'>
                                 <td className='border p-2'> {order._id} </td>
                                 <td className='border p-2'> {order.createdAt.slice(0, 10)} </td>
-                                <td className='border p-2'> {order.totalPrice} </td>
-                                <td className='border p-2'> {order.isStatus ? "Confirm" : "Not"} </td>
+                                <td className='border border-gray-300 py-2 px-4 sm:px-6 md:px-8'>{order.isDelivered ? "Confirmed" : "Not comfirm"}</td>
+                                <td className='border p-2'><Link to={`/order/${order._id}`} className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded'>
+                                    View Details
+                                </Link>
+                                </td>
+
+
                             </tr>
                         ))}
                     </tbody>

@@ -111,19 +111,11 @@ const handleLogin = async () => {
                             Products
                         </Link>
                     </li>
-<<<<<<< HEAD
                     {<li>
-=======
-                    <li>
->>>>>>> 805094443f821ece5007225c3edc000b6e568771
                         <Link to="/admin/orders">
-                         Request
+                            Request
                         </Link>
-<<<<<<< HEAD
                     </li>}
-=======
-                    </li>
->>>>>>> 805094443f821ece5007225c3edc000b6e568771
                 </ul>
             </>
         )

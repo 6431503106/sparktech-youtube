@@ -25,17 +25,9 @@ const OrderSchema = mongoose.Schema(
       city: { type: String, required: true },
       postalCode: { type: String, required: true },
       country: { type: String, required: true },
-    },
-    paymentMethod: {
-      type: String,
-      required: true,
-    },
-    paymentResult: {
-      id: { type: String },
-      status: { type: String },
-      updateTime: { type: String },
-      emailAddress: { type: String },
-    },
+      deliveryTime: { type: String, required: true } // เพิ่มตัวแปรที่เก็บเวลา
+  },
+  
     itemsPrice: {
       type: Number,
       required: true,

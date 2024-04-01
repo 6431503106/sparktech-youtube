@@ -12,20 +12,20 @@ export default function PlaceOrderScreen() {
 
     const cart = useSelector(state => state.cart)
 
-    const { cartItems, shippingAddress: { address, city, postalCode, country }, paymentMethod, itemsPrice, shippingPrice, taxPrice, totalPrice } = cart
+    const { cartItems, shippingAddress: { address, city, postalCode, country,deliveryTime},} = cart
 
     const [createOrder, { isLoading }] = useCreateOrderMutation()
+
+    const handleCancel = () => {
+        // ยกเลิกการกรอกข้อมูลและกลับไปยังหน้าหลักหรือหน้าก่อนหน้านี้
+        navigate("/cart")
+    }
 
     const handlePlaceOrder = async () => {
         try {
             const res = await createOrder({
                 orderItems: cartItems,
-                shippingAddress: { address, city, postalCode, country },
-                paymentMethod,
-                itemsPrice,
-                shippingPrice,
-                taxPrice,
-                totalPrice
+                shippingAddress: { address, city, postalCode, country,deliveryTime },
             }).unwrap()
             dispatch(clearCartItems())
             toast.success("Order Placed!")
@@ -38,19 +38,17 @@ export default function PlaceOrderScreen() {
     return (
         <div className="flex flex-col md:flex-row justify-center items-start">
             <div className="md:w-2/3 p-4">
-                <h2 className="text-2xl font-semibold mb-4">Place Order</h2>
+                <h2 className="text-2xl font-semibold mb-4">Information</h2>
                 <div className="mb-4">
-                    <h3 className="text-lg font-semibold mb-2">Shipping Address:</h3>
-                    <p>{address}, {city}, {postalCode}, {country}</p>
-                </div>
-                <div className="mb-4">
-                    <h3 className="text-lg font-semibold mb-2">Payment Method:</h3>
-                    <p>{paymentMethod}</p>
+                    <h3 className="text-lg font-semibold mb-2">Reason:</h3>
+                    <p>{address}</p>
+                    <h3 className="text-lg font-semibold mb-2">Return Date:</h3>
+                    <p>{deliveryTime}</p>
                 </div>
             </div>
 
             <div className="md:w-1/3 bg-gray-100 p-4">
-                <h3 className="text-xl font-semibold mb-4">Order Summary</h3>
+                <h3 className="text-xl font-semibold mb-4">Product Summary</h3>
                 <table className="w-full border-collapse">
                     <thead>
                         <tr>
@@ -60,27 +58,28 @@ export default function PlaceOrderScreen() {
                     </thead>
                     <tbody>
                         {cartItems.map(item => (
-                            <tr key={item._id} className='border-b border-gray-400'>
-                                <td className="text-left">{item.name}</td>
-                                <td className="text-right">{item.qty}</td>
-                            </tr>
+                             <tr key={item._id} className="border-b border-gray-400">
+                             <td className='px-7 py-3 whitespace-nowrap'>
+                             <img src={item.image} alt={item.name} className="w-20 h-15 object-cover mr-4" />
+                             <td className="text-left">{item.name}</td></td>
+                             <td className="text-right">{item.qty}</td>
+                         </tr>
                         ))}
-                        <tr className="border-b border-gray-400">
-                            <td className="text-left font-semibold">Shipping</td>
-                            <td className="text-right"></td>
-                            <td className="text-right">${shippingPrice}</td>
-                        </tr>
-                        <tr className="border-b border-gray-400">
-                            <td className="text-left font-semibold">Tax</td>
-                            <td className="text-right"></td>
-                            <td className="text-right">${taxPrice}</td>
-                        </tr>
+                
                     </tbody>
                 </table>
-                <div className="mt-4">
-                    <p className="text-right font-semibold">Total: ${totalPrice}</p>
+                <div className="flex justify-between">
+                    <button
+                        className="bg-green-800 text-white px-4 py-2 rounded-md mt-4 hover:bg-gray-950"
+                        onClick={handlePlaceOrder}>Confirm
+                    </button>
+                    <button
+                        className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md mt-2 hover:bg-gray-400"
+                        onClick={handleCancel}
+                    >
+                        Cancel
+                    </button>
                 </div>
-                <button className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded w-full mt-4" onClick={handlePlaceOrder}>Place Order</button>
                 {isLoading && <Spinner />}
             </div>
         </div >
