@@ -16,3 +16,7 @@ EMAIL_HOST = sandbox.smtp.mailtrap.io
 EMAIL_PORT = 587
 EMAIL_USERNAME = a36f160a343126
 EMAIL_PASSWORD = 3135f7a5b8c933
+
+
+npm run dev 
+ติดตั้งตัวนี้ npm install -g concurrently (ทั้ง client และ server)
