@@ -1,4 +1,4 @@
-##.env## 
+##.env## ในโฟเดอร์ server
 
 PORT = 5000
 NODE_ENV = development
