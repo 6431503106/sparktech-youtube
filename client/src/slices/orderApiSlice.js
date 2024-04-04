@@ -1,14 +1,27 @@
-import { apiSlice } from "./apiSlice"
-import { BACKEND_URL, ORDERS_URL } from "../constants"
+import { apiSlice } from "./apiSlice";
+import { BACKEND_URL, ORDERS_URL } from "../constants";
 
 export const orderApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     createOrder: builder.mutation({
-      query: order => ({
-        url: ORDERS_URL,
-        method: "POST",
-        body: order,
-      }),
+      query: order => {
+        // Extract borrowingDate from order object
+        const { borrowingDate, ...rest } = order;
+
+        // Calculate returnDate by adding 7 days to borrowingDate
+        const returnDate = new Date(borrowingDate);
+        returnDate.setDate(returnDate.getDate() + 7);
+
+        return {
+          url: ORDERS_URL,
+          method: "POST",
+          body: {
+            ...rest,
+            borrowingDate,
+            returnDate,
+          },
+        };
+      },
     }),
     getOrderDetails: builder.query({
       query: id => ({
@@ -42,7 +55,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
       }),
     }),
   }),
-})
+});
 
 export const {
   useCreateOrderMutation,
@@ -51,4 +64,4 @@ export const {
   usePayWithStripeMutation,
   useGetOrdersQuery,
   useDeliverOrderMutation,
-} = orderApiSlice
+} = orderApiSlice;

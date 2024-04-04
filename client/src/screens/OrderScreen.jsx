@@ -50,8 +50,8 @@ export default function OrderScreen() {
                     <h3 className="text-lg font-semibold mb-2">Information:</h3>
                     <p>Username: {user.name}</p>
                     <p>Email: {user.email}</p>
-                    <p>Reason: {shippingAddress.address}</p>
-                    <p>Return Date: {shippingAddress.deliveryTime}</p>
+                    <p>Reason: {shippingAddress.reason}</p>
+                    <p>Return Date: {new Date(shippingAddress.returnDate).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })}</p>
                 </div>
                 <div className="mb-4">
 

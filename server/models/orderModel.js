@@ -21,11 +21,13 @@ const OrderSchema = mongoose.Schema(
       },
     ],
     shippingAddress: {
-      address: { type: String, required: true },
-      city: { type: String, required: true },
-      postalCode: { type: String, required: true },
-      country: { type: String, required: true },
-      deliveryTime: { type: String, required: true } // เพิ่มตัวแปรที่เก็บเวลา
+      address: { type: String},
+      city: { type: String},
+      postalCode: { type: String },
+      country: { type: String},
+      borrowingDate: { type: Date, required: true }, // เพิ่มต่อใส่ ,
+      returnDate: { type: Date, required: true },
+      reason: { type: String, required: true } 
   },
   
     itemsPrice: {

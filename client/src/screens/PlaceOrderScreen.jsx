@@ -12,7 +12,7 @@ export default function PlaceOrderScreen() {
 
     const cart = useSelector(state => state.cart)
 
-    const { cartItems, shippingAddress: { address, city, postalCode, country,deliveryTime},} = cart
+    const { cartItems, shippingAddress: { deliveryTime, borrowingDate, returnDate, reason } } = cart
 
     const [createOrder, { isLoading }] = useCreateOrderMutation()
 
@@ -25,7 +25,7 @@ export default function PlaceOrderScreen() {
         try {
             const res = await createOrder({
                 orderItems: cartItems,
-                shippingAddress: { address, city, postalCode, country,deliveryTime },
+                shippingAddress: { deliveryTime, borrowingDate, reason },
             }).unwrap()
             dispatch(clearCartItems())
             toast.success("Order Placed!")
@@ -41,9 +41,11 @@ export default function PlaceOrderScreen() {
                 <h2 className="text-2xl font-semibold mb-4">Information</h2>
                 <div className="mb-4">
                     <h3 className="text-lg font-semibold mb-2">Reason:</h3>
-                    <p>{address}</p>
-                    <h3 className="text-lg font-semibold mb-2">Return Date:</h3>
-                    <p>{deliveryTime}</p>
+                    <p>{reason}</p>
+                    <h3 className="text-lg font-semibold mb-2">Borrowing Date:</h3>
+                    <p>{borrowingDate}</p>
+                   <h3 className="text-lg font-semibold mb-2">Return Date:</h3>
+<p>{returnDate ? returnDate.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }).replace(/\//g, '-') : ''}</p>
                 </div>
             </div>
 
@@ -58,14 +60,14 @@ export default function PlaceOrderScreen() {
                     </thead>
                     <tbody>
                         {cartItems.map(item => (
-                             <tr key={item._id} className="border-b border-gray-400">
-                             <td className='px-7 py-3 whitespace-nowrap'>
-                             <img src={item.image} alt={item.name} className="w-20 h-15 object-cover mr-4" />
-                             <td className="text-left">{item.name}</td></td>
-                             <td className="text-right">{item.qty}</td>
-                         </tr>
+                            <tr key={item._id} className="border-b border-gray-400">
+                                <td className='px-7 py-3 whitespace-nowrap'>
+                                    <img src={item.image} alt={item.name} className="w-20 h-15 object-cover mr-4" />
+                                    <span className="text-left">{item.name}</span>
+                                </td>
+                                <td className="text-right">{item.qty}</td>
+                            </tr>
                         ))}
-                
                     </tbody>
                 </table>
                 <div className="flex justify-between">
@@ -82,6 +84,6 @@ export default function PlaceOrderScreen() {
                 </div>
                 {isLoading && <Spinner />}
             </div>
-        </div >
+        </div>
     )
 }

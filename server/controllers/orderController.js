@@ -11,6 +11,10 @@ const addOrderItems = asyncHandler(async (req, res) => {
     taxPrice,
     shippingPrice,
     totalPrice,
+    borrowingDate,
+    reason,
+    returnDate,
+    
   } = req.body
 
   if (orderItems?.length === 0) {
@@ -29,6 +33,9 @@ const addOrderItems = asyncHandler(async (req, res) => {
       taxPrice,
       shippingPrice,
       totalPrice,
+      borrowingDate,
+      reason,
+      returnDate,
     })
     const createdOrder = await order.save()
 
@@ -74,10 +81,29 @@ const updateOrderToDelivered = asyncHandler(async (req, res) => {
   throw new Error("Order Not Found")
 })
 
+const borrowProduct = asyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id)
+  if (order) {
+    order.borrowingDate = new Date()
+    // คำนวณวันที่คืนโดยเพิ่ม 7 วัน
+    const returnDate = new Date()
+    returnDate.setDate(returnDate.getDate() + 7)
+    order.returnDate = returnDate
+
+    const updatedOrder = await order.save()
+
+    res.json(updatedOrder)
+  } else {
+    res.status(404)
+    throw new Error("Order Not Found")
+  }
+})
+
 export {
   addOrderItems,
   getOrderById,
   getUserOrders,
   getOrders,
   updateOrderToDelivered,
+  borrowProduct,
 }

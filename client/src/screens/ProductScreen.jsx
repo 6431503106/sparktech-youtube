@@ -74,13 +74,13 @@ export default function ProductScreen() {
                             className="bg-yellow-500 text-white px-4 py-2 rounded-md mt-4 hover:bg-yellow-600"
                             onClick={addtoCartHandler}
                         >
-                            Borrow
+                            Add To Cart
                         </button>
                     </div>
                 </div>
             )}
-            {/*<div className="mt-8">
-                <h2 className="text-xl font-semibold">Customer Reviews</h2>
+            <div className="mt-8">
+                <h2 className="text-xl font-semibold">Students Reviews</h2>
                 <div className="mt-4">
                     <ul>
                         {product?.reviews?.map((review, i) => (
@@ -133,7 +133,7 @@ export default function ProductScreen() {
                     <h3 className="text-lg font-semibold">Write a Review</h3>
                     <p className="text-gray-700">Please <Link to="/login" className="text-blue-500 hover:underline">log in</Link> to write a review.</p>
                 </div>
-                            </div>*/}
+                            </div>
         </div>
     )
 }

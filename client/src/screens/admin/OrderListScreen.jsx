@@ -6,7 +6,6 @@ import { useGetOrdersQuery } from '../../slices/orderApiSlice'
 
 export default function OrderListScreen() {
   const { data: orders, isLoading, error } = useGetOrdersQuery()
-
   if (isLoading) {
     <Spinner />
   }
@@ -39,7 +38,7 @@ export default function OrderListScreen() {
                 <td className='border border-gray-300 py-2 px-4 sm:px-6 md:px-8'>
                   <Link to={`/order/${order._id}`}>
                     <button className='bg-blue-500 hover:bg-blue-500 text-white fond-bold py-2 px-4 rounded'>
-                      View Details</button>
+                     Edit</button>
                   </Link>
                 </td>
               </tr>
