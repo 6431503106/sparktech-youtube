@@ -65,5 +65,5 @@ npm i npm i bcryptjs
 npm i express mongoose dotenv
 npm install -D nodemon
 npm start
-npm i jsonwebtoken ในหน้า controllers import jwt from 'jsonwebtoken'
+npm i jsonwebtoken แล้วเพิ่มในหน้า controllers (import jwt from 'jsonwebtoken') เพื่อเรียกใช้
 npm install passport-google-oauth20 express-session passport axios
