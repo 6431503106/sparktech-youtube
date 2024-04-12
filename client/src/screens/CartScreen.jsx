@@ -141,7 +141,7 @@ export default function CartScreen() {
                 <label htmlFor="returnDate" className="text-gray-700">
                     Return Date:
                 </label>
-                <p>{borrowingDate ? new Date(new Date(borrowingDate).getTime() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }) : ''}</p>
+                <p>{borrowingDate ? new Date(new Date(borrowingDate).getTime() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString('th', { month: '2-digit', day: '2-digit', year: 'numeric' }) : ''}</p>
                 </div>
 
                 <div className="flex justify-between">
@@ -149,7 +149,7 @@ export default function CartScreen() {
                         className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-6000"
                         onClick={handleSubmit}
                     >
-                        Continue
+                        Borrow
                     </button>
                     <button
                         className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400"

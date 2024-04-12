@@ -118,7 +118,7 @@ export default function ProfileScreen() {
                         <tr>
                             <th className="border p-2">Product Name</th>
                             <th className="border p-2">Quantity</th>
-                            <th className="border p-2">Borrowing Date</th>
+                            <th className="border p-2">Borrow Date</th>
                             <th className="border p-2">Return Date</th>
                             <th className="border p-2">Request Date</th>
                             <th className="border p-2">Status</th>
@@ -131,9 +131,9 @@ export default function ProfileScreen() {
                             <tr key={order._id} className='text-center'>
                                 <td className='border p-2'>{order.orderItems.map(item => item.name).join(", ")}</td> {/* Product Name */}
                                 <td className='border p-2'>{order.orderItems.map(item => item.qty).join(", ")}</td> {/* Quantity */}
-                                <td className='border p-2'>{new Date(order.shippingAddress.borrowingDate).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
-                                <td className='border p-2'>{new Date(order.shippingAddress.returnDate).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
-                                <td className='border p-2'>{new Date(order.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
+                                <td className='border p-2'>{new Date(order.shippingAddress.borrowingDate).toLocaleDateString('th', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
+                                <td className='border p-2'>{new Date(order.shippingAddress.returnDate).toLocaleDateString('th', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
+                                <td className='border p-2'>{new Date(order.createdAt).toLocaleDateString('th', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
                                 <td className='border p-2'>{order.isDelivered ? "Confirmed" : "Not confirmed"}</td> {/* Status */}
                                 <td className='border p-2'>
                                     <Link to={`/order/${order._id}`} className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded'>

@@ -47,11 +47,16 @@ export default function OrderScreen() {
                     <p>{orderId}</p>
                 </div>
                 <div className="mb-4">
+                <h3 className="text-lg font-semibold mb-2">Request Date:</h3>
+                <p>{new Date(order.createdAt).toLocaleDateString('th', { year: 'numeric', month: '2-digit', day: '2-digit' })}</p>
+                </div>
+                <div className="mb-4">
                     <h3 className="text-lg font-semibold mb-2">Information:</h3>
                     <p>Username: {user.name}</p>
                     <p>Email: {user.email}</p>
                     <p>Reason: {shippingAddress.reason}</p>
-                    <p>Return Date: {new Date(shippingAddress.returnDate).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })}</p>
+                    <p>Borrow Date: {new Date(shippingAddress.borrowingDate).toLocaleDateString('th', { year: 'numeric', month: '2-digit', day: '2-digit' })}</p>
+                    <p>Return Date: {new Date(shippingAddress.returnDate).toLocaleDateString('th', { year: 'numeric', month: '2-digit', day: '2-digit' })}</p>
                 </div>
                 <div className="mb-4">
 
