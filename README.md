@@ -50,6 +50,7 @@ export default {
 @tailwind utilities;
 ----------------
 npm i react-router-dom react-icons
+npm install react-modal
 npm run dev
 ----------------
 cd.. ให้มาหน้าsparktech-youtube
