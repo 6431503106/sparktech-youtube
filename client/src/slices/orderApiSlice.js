@@ -54,8 +54,16 @@ export const orderApiSlice = apiSlice.injectEndpoints({
         method: "PATCH",
       }),
     }),
+    updateOrderStatus: builder.mutation({
+      query: ({ orderId, status }) => ({
+        url: `${ORDERS_URL}/status/${orderId}`,
+        method: "PATCH",
+        body: { status }, // ส่ง status ในร่างของคำขอ
+      }),
+    }),
   }),
 });
+
 
 export const {
   useCreateOrderMutation,
@@ -64,4 +72,5 @@ export const {
   usePayWithStripeMutation,
   useGetOrdersQuery,
   useDeliverOrderMutation,
+  useUpdateOrderStatusMutation,
 } = orderApiSlice;
