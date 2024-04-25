@@ -3,6 +3,7 @@ import { useGetProductDetailsQuery, useUpdateProductMutation, useUploadFileHandl
 import { toast } from 'react-toastify';
 import { useNavigate, useParams } from 'react-router-dom';
 import Spinner from '../../components/Spinner';
+import { Link } from 'react-router-dom';
 
 export default function ProductEditScreen() {
     const { id: productId } = useParams();
@@ -167,11 +168,16 @@ export default function ProductEditScreen() {
                 </div>
                 <div className="mb-4">
                     <button
-                        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+                        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 mr-4"
                         onClick={handleSubmit}
                     >
                         Update Product
                     </button>
+
+                    <Link to="/admin/products" className="bg-gray-800 text-white py-2.5 px-4 rounded-md mb-4">
+                    Back
+                    </Link>
+
                     {uploadLoading && <Spinner />}
                 </div>
             </form>
