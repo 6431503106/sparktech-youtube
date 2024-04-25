@@ -3,6 +3,7 @@ import { useGetUserByIdQuery, useUpdateUserMutation } from '../../slices/userApi
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import Spinner from '../../components/Spinner'
+import { Link } from 'react-router-dom'
 
 export default function UserEditScreen() {
     const navigate = useNavigate()
@@ -74,11 +75,16 @@ export default function UserEditScreen() {
                 </div>
                 <button
                     type="button"
-                    className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+                    className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 mr-4"
                     onClick={handleUpdateUser}
                 >
                     Update
                 </button>
+                
+                <Link to="/admin/users" className="bg-gray-800 text-white py-2.5 px-4 rounded-md mb-4">
+                Back
+                </Link>
+
                 {isLoading && <Spinner />}
             </form>
         </div>
