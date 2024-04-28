@@ -158,6 +158,7 @@ export default function ProfileScreen() {
                     <thead>
                         <tr>
                             <th className="border p-2">Product Name</th>
+                            <th className="border p-2">Product ID</th>
                             <th className="border p-1">Quantity</th>
                             <th className="border p-2">Borrowing Date</th>
                             <th className="border p-2">Return Date</th>
@@ -169,6 +170,7 @@ export default function ProfileScreen() {
                     {userOrders?.map(order => (
                         <tr key={order._id} className='text-center'>
                             <td className='border p-2'>{order.orderItems.map(item => item.name).join(", ")}</td>
+                            <td  className='border p-2'>{order._id}</td>
                             <td className='border p-2'>{order.orderItems.map(item => item.qty).join(", ")}</td>
                             <td className='border p-2'>{new Date(order.shippingAddress.borrowingDate).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
                             <td className='border p-2'>{new Date(order.shippingAddress.returnDate).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
