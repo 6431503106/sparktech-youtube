@@ -52,6 +52,7 @@ export default {
 npm i react-router-dom react-icons
 npm install react-modal //เพิ่มมาใหม่
 npm install @mui/material //เพิ่มมาใหม่
+npm install @emotion/styled //เพิ่มมาใหม่
 npm run dev
 ----------------
 cd.. ให้มาหน้าsparktech-youtube
