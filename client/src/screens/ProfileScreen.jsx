@@ -157,7 +157,7 @@ export default function ProfileScreen() {
                 <table className="min-w-full border-collapse border border-gray-300">
                     <thead>
                         <tr>
-                            <th className="border p-2">Product Name</th>
+                            <th className="border p-2">Product name</th>
                             <th className="border p-2">Product ID</th>
                             <th className="border p-1">Quantity</th>
                             <th className="border p-2">Borrowing Date</th>
