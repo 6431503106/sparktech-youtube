@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useAddMutation } from '../../slices/userApiSlice';
 import { toast } from 'react-toastify';
-import { setCredentials } from '../../slices/userSlice'
+import { setCredentials } from '../../slices/userSlice';
 import { useDispatch } from 'react-redux';
+import { useNavigate,Link } from 'react-router-dom'; // เพิ่ม import เข้ามา
 
 export default function AddScreen() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -14,7 +16,7 @@ export default function AddScreen() {
 
     const [add, { isLoading: isAddLoading }] = useAddMutation();
 
-    const handleAdd = async () => {
+    {/*const handleAdd = async () => {
         if (password !== confirmPassword) {
             alert("Passwords do not match");
             return;
@@ -26,11 +28,28 @@ export default function AddScreen() {
             const res = await add({ name, email, password }).unwrap();
             dispatch(setCredentials(res));
             toast.success("User added successfully");
+            // เพิ่มการ Navigate ไปยังหน้า /admin/users หลังจากเพิ่มผู้ใช้สำเร็จ
+            navigate("admin/users");
         } catch (error) {
             toast.error(error?.data?.message || error?.error);
         }
 
         setIsLoading(false);
+    };*/}
+
+    const handleAdd = async () => {
+        try {
+            // ตรวจสอบผลการเพิ่มผู้ใช้และทำงานตามต้องการ
+            const res = await add({ name, email, password }).unwrap();
+            dispatch(setCredentials(res));
+            toast.success("User added successfully");
+    
+            // เมื่อเพิ่มผู้ใช้สำเร็จ ให้ navigate ไปยังหน้าที่ต้องการ
+            navigate("/admin/users"); // นำผู้ใช้ไปยังหน้า /admin/users
+        } catch (error) {
+            // จัดการข้อผิดพลาดเมื่อเพิ่มผู้ใช้ไม่สำเร็จ
+            toast.error(error?.data?.message || error?.error);
+        }
     };
 
     return (
@@ -79,11 +98,15 @@ export default function AddScreen() {
                 </div>
                 <button
                     type='submit'
-                    className="bg-blue-500 text-white px-4 py-2 rounded-md mt-4 hover:bg-blue-600"
+                    className="bg-blue-500 text-white px-4 py-2 rounded-md mt-4 mr-2 hover:bg-blue-600"
                     disabled={isLoading || isAddLoading}
                 >
                     {isLoading || isAddLoading ? "Adding..." : "Add New User"}
                 </button>
+
+                <Link to="/admin/users" className="bg-gray-800 text-white py-2.5 px-4 rounded-md mb-4">
+                Back
+                </Link>
             </form>
         </div>
     );

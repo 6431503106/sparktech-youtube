@@ -15,6 +15,6 @@ router.route("/").post(protect, addOrderItems).get(protect, admin, getOrders)
 router.route("/user-orders").get(protect, getUserOrders)
 router.route("/:id").get(protect, getOrderById)
 router.route("/deliver/:id").patch(protect, admin, updateOrderToDelivered)
-router.route("/status/:id").patch(protect, admin, updateOrderStatus);
+router.route("/status/:id").patch(protect, updateOrderStatus);
 
 export default router

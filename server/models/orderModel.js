@@ -62,8 +62,8 @@ const OrderSchema = mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["Confirm", "Pending", "Cancel"], // กำหนดเฉพาะค่าที่ยอมรับได้
-      default: "Pending", // ค่าเริ่มต้นเป็น "pending"
+      enum: ["Confirm", "Pending", "Cancel"], 
+      default: "Pending", 
     },
   },
   {
