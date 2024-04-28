@@ -12,7 +12,6 @@ const OrderSchema = mongoose.Schema(
         name: { type: String, required: true },
         qty: { type: Number, required: true },
         image: { type: String, required: true },
-        price: { type: Number, required: true },
         product: {
           type: mongoose.Schema.Types.ObjectId,
           required: true,
@@ -25,7 +24,7 @@ const OrderSchema = mongoose.Schema(
       city: { type: String},
       postalCode: { type: String },
       country: { type: String},
-      borrowingDate: { type: Date, required: true }, // เพิ่มต่อใส่ ,
+      borrowingDate: { type: Date, required: true },
       returnDate: { type: Date, required: true },
       reason: { type: String, required: true } 
   },
@@ -60,6 +59,11 @@ const OrderSchema = mongoose.Schema(
     },
     deliveredAt: {
       type: Date,
+    },
+    status: {
+      type: String,
+      enum: ["Confirm", "Pending", "Cancel"], 
+      default: "Pending", 
     },
   },
   {

@@ -1,17 +1,16 @@
 import React from 'react'
-import { useDeliverOrderMutation, useGetOrderDetailsQuery, usePayWithStripeMutation } from '../slices/orderApiSlice'
+import { useDeliverOrderMutation } from '../slices/orderApiSlice'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import Spinner from '../components/Spinner'
+import { useGetOrderDetailsQuery } from '../slices/orderApiSlice'
 
 export default function OrderScreen() {
     const navigate = useNavigate()
     const { id: orderId } = useParams()
     const { userInfo } = useSelector(state => state.user)
     const { data: order, isLoading, error, refetch } = useGetOrderDetailsQuery(orderId)
-
-    const [payWithStripe, { isLoading: loadingStripe }] = usePayWithStripeMutation()
     const [deliverOrder, { isLoading: loadingDeliver }] = useDeliverOrderMutation()
 
     if (error) {

@@ -99,6 +99,48 @@ const borrowProduct = asyncHandler(async (req, res) => {
   }
 })
 
+const updateOrderStatus = asyncHandler(async (req, res) => {
+  const { id } = req.params; 
+  const { status } = req.body; 
+
+  
+  const order = await Order.findById(id);
+
+  // ถ้าพบคำสั่งซื้อ
+  if (order) {
+    
+    switch (status) {
+      case "Confirm":
+        
+        order.status = "Confirm";
+        break;
+      case "Pending":
+        
+        order.status = "Pending";
+        break;
+      case "Cancel":
+        
+        order.status = "Cancel";
+        break;
+      default:
+        // หากสถานะไม่ถูกต้อง
+        res.status(400); 
+        throw new Error("Invalid order status");
+    }
+
+    
+    const updatedOrder = await order.save();
+
+    
+    res.json(updatedOrder);
+  } else {
+    
+    res.status(404); 
+    throw new Error("Order not found");
+  }
+});
+
+
 export {
   addOrderItems,
   getOrderById,
@@ -106,4 +148,5 @@ export {
   getOrders,
   updateOrderToDelivered,
   borrowProduct,
+  updateOrderStatus,
 }

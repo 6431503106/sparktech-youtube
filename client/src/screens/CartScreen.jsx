@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { removeFromCart } from '../slices/cartSlice'
-import { saveShippingAddress } from '../slices/cartSlice'
 import { toast } from 'react-toastify'
 import { clearCartItems } from '../slices/cartSlice'
 import { useCreateOrderMutation } from '../slices/orderApiSlice';
@@ -13,11 +12,7 @@ export default function CartScreen() {
     const cart = useSelector(state => state.cart)
     const { cartItems } = cart;
     const { shippingAddress } = cart
-    const [address, setAddress] = useState(shippingAddress?.address || "")
     const [reason, setReason] = useState(shippingAddress?.address || "")
-    const [city, setCity] = useState(shippingAddress?.city || "")
-    const [postalCode, setPostalCode] = useState(shippingAddress?.postalCode || "")
-    const [country, setCountry] = useState(shippingAddress?.country || "")
     const [borrowingDate, setBorrowingDate] = useState("")
 
     const navigate = useNavigate();
@@ -43,10 +38,6 @@ export default function CartScreen() {
     
         // สร้าง Object ของ shippingAddress โดยรวมทุกข้อมูลที่ผู้ใช้กรอกและ returnDate ที่คำนวณได้
         const shippingAddressData = {
-            address,
-            city,
-            postalCode,
-            country,
             borrowingDate,
             returnDate: returnDateObject,
             reason
@@ -59,16 +50,12 @@ export default function CartScreen() {
                 shippingAddress: shippingAddressData,
             }).unwrap();
     
-            // ล้างรายการสินค้าในตะกร้า
             dispatch(clearCartItems());
     
-            // แสดงข้อความ "Order Placed!"
             toast.success("The loan request is complete!");
     
-            // นำผู้ใช้ไปยังหน้ารายละเอียดคำสั่งซื้อที่สร้างขึ้นใหม่
             navigate("/profile");
         } catch (err) {
-            // แสดงข้อความผิดพลาดหากมีข้อผิดพลาดเกิดขึ้น
             toast.error(err?.data?.message || err.error);
         }
     };
@@ -126,7 +113,7 @@ export default function CartScreen() {
 
                 <div className="mb-4">
                     <label htmlFor="borrowingDate" className="text-gray-700">
-                        Borrowing Date:
+                        Borrowing Date: MM/DD/YY
                     </label>
                     <input
                         type="date"
@@ -139,7 +126,7 @@ export default function CartScreen() {
 
                 <div className="mb-4">
                 <label htmlFor="returnDate" className="text-gray-700">
-                    Return Date:
+                    Return Date: MM/DD/YY
                 </label>
                 <p>{borrowingDate ? new Date(new Date(borrowingDate).getTime() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString('th', { month: '2-digit', day: '2-digit', year: 'numeric' }) : ''}</p>
                 </div>

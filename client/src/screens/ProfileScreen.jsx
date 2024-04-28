@@ -1,30 +1,29 @@
 // Import React and other necessary libraries
-import React, { useState } from 'react'
+import React, { useState, } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useGetUserOrdersQuery } from '../slices/orderApiSlice'
+import { useGetUserOrdersQuery,useUpdateOrderStatusMutation} from '../slices/orderApiSlice'
 import { useUpdateUserProfileMutation } from '../slices/userApiSlice'
 import { toast } from 'react-toastify'
 import Spinner from '../components/Spinner'
 import { setCredentials } from '../slices/userSlice'
-import { Link } from 'react-router-dom';
+import Modal from 'react-modal';
+import { RxCross2 } from "react-icons/rx";
 
-// ProfileScreen component
 export default function ProfileScreen() {
-    // Dispatch and useSelector hooks
+
     const dispatch = useDispatch()
     const { userInfo } = useSelector(state => state.user)
 
-    // State variables for profile information
     const [name, setName] = useState(userInfo.name)
     const [email, setEmail] = useState(userInfo.email)
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
 
-    // Queries and mutations
-    const { data: userOrders, isLoading, error } = useGetUserOrdersQuery()
+
+    const { data: userOrders, isLoading, error,refetch } = useGetUserOrdersQuery()
     const [updateUser, { isLoading: isUpdating }] = useUpdateUserProfileMutation()
 
-    // Function to handle profile update
+    
     const handleUpdateProfile = async e => {
         e.preventDefault()
         if (password !== confirmPassword) {
@@ -36,6 +35,49 @@ export default function ProfileScreen() {
         dispatch(setCredentials({ ...res }))
         toast.success("Updated Profile")
     }
+
+    const [isOpen, setIsOpen] = useState(false);
+    const [selectedOrder, setSelectedOrder] = useState(null);
+    const [updateOrderStatus, { isLoading: isUpdatingStatus }] = useUpdateOrderStatusMutation();
+
+  if (isLoading) {
+    return <Spinner />
+  }
+
+  if (error) {
+    toast.error(error.message)
+  }
+
+  const handleUpdateStatus = () => {
+    if (!selectedOrder) {
+      toast.error('Please select an order.');
+      return;
+    }
+    
+    updateOrderStatusHandler(selectedOrder._id, "Cancel");
+  };
+  
+  const updateOrderStatusHandler = async (orderId, status) => {
+    try {
+      await updateOrderStatus({ orderId, status });
+      toast.success(`Status updated to ${status}`);
+      refetch();
+      closeModal(); 
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+  
+
+  const openModal = (order) => {
+    setSelectedOrder(order); // Set selected order
+    setIsOpen(true); // Open modal
+  };
+
+  const closeModal = () => {
+    setSelectedOrder(null); // Reset selected order
+    setIsOpen(false); // Close modal
+  };
 
     // If there's an error, display error message
     if (error) {
@@ -110,7 +152,6 @@ export default function ProfileScreen() {
                     {isUpdating && <Spinner />}
                 </form>
             </div>
-            {/* User Orders */}
             <div className="w-3/4 p-4">
                 <h2 className="text-xl font-semibold mb-4">My Request</h2>
                 <table className="min-w-full border-collapse border border-gray-300">
@@ -118,9 +159,8 @@ export default function ProfileScreen() {
                         <tr>
                             <th className="border p-2">Product Name</th>
                             <th className="border p-2">Quantity</th>
-                            <th className="border p-2">Borrow Date</th>
+                            <th className="border p-2">Borrowing Date</th>
                             <th className="border p-2">Return Date</th>
-                            <th className="border p-2">Request Date</th>
                             <th className="border p-2">Status</th>
                             <th className="border p-2">Actions</th>
                         </tr>
@@ -131,9 +171,9 @@ export default function ProfileScreen() {
                             <tr key={order._id} className='text-center'>
                                 <td className='border p-2'>{order.orderItems.map(item => item.name).join(", ")}</td> {/* Product Name */}
                                 <td className='border p-2'>{order.orderItems.map(item => item.qty).join(", ")}</td> {/* Quantity */}
-                                <td className='border p-2'>{new Date(order.shippingAddress.borrowingDate).toLocaleDateString('th', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
-                                <td className='border p-2'>{new Date(order.shippingAddress.returnDate).toLocaleDateString('th', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
-                                <td className='border p-2'>{new Date(order.createdAt).toLocaleDateString('th', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
+                                <td className='border p-2'>{new Date(order.shippingAddress.borrowingDate).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
+                                <td className='border p-2'>{new Date(order.shippingAddress.returnDate).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
+                                <td className='border p-2'>{new Date(order.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
                                 <td className='border p-2'>{order.isDelivered ? "Confirmed" : "Not confirmed"}</td> {/* Status */}
                                 <td className='border p-2'>
                                     <Link to={`/order/${order._id}`} className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded'>
@@ -144,9 +184,94 @@ export default function ProfileScreen() {
                         ))}
                     </tbody>
                 </table>
-                {/* Display message if no orders */}
-                {userOrders.length === 0 && <p className='text-gray-400 text-xl text-center mt-5'>No Orders</p>}
+                {userOrders.length === 0 && <p className='text-gray-400 text-xl text-center mt-5'>No items</p>}
             </div>
+            <Modal
+                isOpen={isOpen}
+                onRequestClose={closeModal}
+                contentLabel="Order Details Modal"
+                appElement={document.getElementById('root')}
+                style={{
+                overlay: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                    zIndex: 1000
+                },
+                content: {
+                    top: '50%',
+                    left: '50%',
+                    right: 'auto',
+                    bottom: 'auto',
+                    marginRight: '-50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: '80%',
+                    maxWidth: '800px' // Increase the max width to match OrderScreen
+                }
+                }}
+            >
+                <div className="flex">
+                <div className="ml-auto">
+                    <button onClick={closeModal} className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md mt-2 hover:bg-gray-400">
+                    <RxCross2 />
+                    </button>
+                </div>
+                </div>
+                {/* Render selected order details */} 
+                {selectedOrder && (
+                <div className="flex flex-col md:flex-row justify-center items-start">
+                    <div className="md:w-1/3 p-4">
+                    <h2 className="text-3xl font-semibold mb-4">Details</h2>
+                    <div className="mb-4">
+                        <h3 className="text-lg font-semibold mb-2">Student Name:</h3>
+                        <p>{selectedOrder.user?.name}</p>
+                    </div>
+                    <div className="mb-4">
+                        <h3 className="text-lg font-semibold mb-2">Information:</h3>
+                        <p>Date of request: {new Date(selectedOrder.createdAt).toLocaleDateString('th', { year: 'numeric', month: '2-digit', day: '2-digit' })}</p>
+                        <p>Reason: {selectedOrder.shippingAddress.reason}</p>
+                    </div>
+                    <div className="mb-4">
+                        <h3 className="text-lg font-semibold mb-2">Date:</h3>
+                        <p>Borrow Date:{new Date(selectedOrder.shippingAddress.borrowingDate).toLocaleDateString('th', { year: 'numeric', month: '2-digit', day: '2-digit' })}</p>
+                        <p>Return Date:{new Date(selectedOrder.shippingAddress.returnDate).toLocaleDateString('th', { year: 'numeric', month: '2-digit', day: '2-digit' })}</p>
+                        </div>
+                        
+                        <div className="mb-4">
+                        {selectedOrder && selectedOrder.status !== 'Cancel' && (
+                        <div className="mb-4">
+                            <button className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 mt-2 rounded mr-2" onClick={() => handleUpdateStatus("Cancel")}>Cancel Request</button>  
+                        </div>
+                    )}
+                        </div>
+                         
+                    </div>
+                    <div className="md:w-2/3 bg-gray-100 p-5 mt-5" style={{ maxHeight: '450px', overflowY: 'auto'}}>
+                    <h3 className="text-xl font-semibold mb-4">Summary</h3>
+                        <table className="w-full border-collapse">
+                        <thead>
+                            <tr>
+                            <th className="text-left">Product</th>
+                            <th className="text-right">Quantity</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {selectedOrder.orderItems?.map(item => (
+                            <tr key={item._id} className="border-b border-gray-400">
+                            <td className='px-7 py-3 whitespace-nowrap'>
+                                <img src={item.image} alt={item.name} className="w-20 h-15 object-cover mr-4" />
+                                <td className="text-left">{item.name}</td>
+                            </td>
+                            <td className="text-right">{item.qty}</td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+                )}
+            </Modal>
+
+
         </div>
     )
+    
 }
