@@ -50,7 +50,7 @@ export default {
 @tailwind utilities;
 ----------------
 npm i react-router-dom react-icons
-npm install react-modal //เพิ่มมาใหม่
+npm install react-modal 
 npm install @mui/material //เพิ่มมาใหม่
 npm install @emotion/styled //เพิ่มมาใหม่
 npm run dev
