@@ -8,6 +8,7 @@ import Spinner from '../components/Spinner'
 import { setCredentials } from '../slices/userSlice'
 import Modal from 'react-modal';
 import { RxCross2 } from "react-icons/rx";
+import { FaRegEye } from "react-icons/fa";
 
 export default function ProfileScreen() {
 
@@ -152,39 +153,41 @@ export default function ProfileScreen() {
                     {isUpdating && <Spinner />}
                 </form>
             </div>
-            <div className="w-3/4 p-4">
+            <div className="w-3/4 p-4 overflow-x-auto">
                 <h2 className="text-xl font-semibold mb-4">My Request</h2>
-                <table className="min-w-full border-collapse border border-gray-300">
+                <table className="min-w-full divide-y divide-gray-200 border">
                     <thead>
                         <tr>
-                            <th className="border p-2">Product name</th>
-                            <th className="border p-2">Product ID</th>
-                            <th className="border p-1">Quantity</th>
-                            <th className="border p-2">Borrowing Date</th>
-                            <th className="border p-2">Return Date</th>
-                            <th className="border p-2">Status</th>
-                            <th className="border p-2">Actions</th>
+                            <th className="px-4 py-3 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider ">Product name</th>
+                            <th className="px-4 py-3  bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider ">ID</th>
+                            <th className="px-4 py-3 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider ">Quantity</th>
+                            <th className="px-4 py-3 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider ">Borrow Date</th>
+                            <th className="px-4 py-3 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider ">Return Date</th>
+                            <th className= "px-4 py-3 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider ">Status</th>
+                            <th className="px-4 py-3 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider ">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                     {userOrders?.map(order => (
-                        <tr key={order._id} className='text-center'>
-                            <td className='border p-2'>{order.orderItems.map(item => item.name).join(", ")}</td>
-                            <td  className='border p-2'>{order._id}</td>
-                            <td className='border p-2'>{order.orderItems.map(item => item.qty).join(", ")}</td>
-                            <td className='border p-2'>{new Date(order.shippingAddress.borrowingDate).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
-                            <td className='border p-2'>{new Date(order.shippingAddress.returnDate).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
-                            <td className={`border border-gray-300 py-2 px-4 sm:px-6 md:px-8 ${order.status === 'Cancel' ? 'text-red-500' : ''}`}>
+                        <tr key={order._id} className='bg-white divide-y divide-gray-200 border'>
+                            <td className='px-7 py-3 text-center '>{order.orderItems.map(item => item.name).join(", ")}</td>
+                            <td  className='px-7 py-3 whitespace-nowrap '>{order._id.slice(-3)}</td>
+                            <td className='px-7 py-3 whitespace-nowrap  text-center'>{order.orderItems.map(item => item.qty).join(", ")}</td>
+                            <td className='px-7 py-3 whitespace-nowrap '>{new Date(order.shippingAddress.borrowingDate).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
+                            <td className='px-7 py-3 whitespace-nowrap '>{new Date(order.shippingAddress.returnDate).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
+                            <td className={`px-7 py-3 whitespace-nowrap  sm:px-6 md:px-8 ${order.status === 'Cancel' ? 'text-red-500' : ''}`}>
                                 {order.status}
                             </td>
-                            <td className='border p-2'>
-                                <button className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded' onClick={() => openModal(order)}>View</button>
+                            <td className='text-back-500 '>
+                                <button className=' font-bold py-2 px-10 whitespace-nowrap' onClick={() => openModal(order)}>
+                                <FaRegEye />
+                                </button>
                             </td>
                         </tr>
                     ))}
                     </tbody>
                 </table>
-                {userOrders.length === 0 && <p className='text-gray-400 text-xl text-center mt-5'>No items</p>}
+                {userOrders.length === 0 && <p className='text-gray-400 text-xl text-center mt-5 '>No items in your list</p>}
             </div>
             <Modal
                 isOpen={isOpen}
@@ -217,7 +220,7 @@ export default function ProfileScreen() {
                 </div>
                 {/* Render selected order details */} 
                 {selectedOrder && (
-                <div className="flex flex-col md:flex-row justify-center items-start">
+                <div className="flex flex-col md:flex-row justify-center items-start ">
                     <div className="md:w-1/3 p-4">
                     <h2 className="text-3xl font-semibold mb-4">Details</h2>
                     <div className="mb-4">
@@ -244,9 +247,9 @@ export default function ProfileScreen() {
                         </div>
                          
                     </div>
-                    <div className="md:w-2/3 bg-gray-100 p-5 mt-5" style={{ maxHeight: '450px', overflowY: 'auto'}}>
+                    <div className="md:w-2/3 bg-gray-100 p-5 mt-5 rounded-md" style={{ maxHeight: '450px', overflowY: 'auto'}}>
                     <h3 className="text-xl font-semibold mb-4">Summary</h3>
-                        <table className="w-full border-collapse">
+                        <table className="w-full border-collapse ">
                         <thead>
                             <tr>
                             <th className="text-left">Product</th>

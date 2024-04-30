@@ -6,6 +6,7 @@ import { useGetOrdersQuery, useUpdateOrderStatusMutation} from '../../slices/ord
 import { RxCross2 } from "react-icons/rx";
 import Modal from 'react-modal';
 import TablePagination from '@mui/material/TablePagination';
+import { CiEdit } from "react-icons/ci";
 
 export default function OrderListScreen() {
   const { data: orders, isLoading, error, refetch } = useGetOrdersQuery()
@@ -129,13 +130,13 @@ export default function OrderListScreen() {
           <thead>
             {/* Table Header Rows */}
             <tr className="bg-gray-200">
-              <th className="px-6 py-1 bg-gray-200 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider border">ID</th>
-              <th className="px-6 py-3 bg-gray-100 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider border">User</th>
-              <th className="px-6 py-3 bg-red-100 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider border">Request Date</th>
-              <th className="px-6 py-3 bg-red-100 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider border">Borrow Date</th>
-              <th className="px-6 py-3 bg-red-100 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider border">Return Date</th>
+              <th className="px-6 py-1 bg-gray-100 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider border">ID</th>
+              <th className="px-6 py-3 bg-gray-100 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider border">User Name</th>
+              <th className="px-6 py-3 bg-red-200 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider border">Request Date</th>
+              <th className="px-6 py-3 bg-red-200 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider border">Borrow Date</th>
+              <th className="px-6 py-3 bg-red-200 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider border">Return Date</th>
               <th className="px-6 py-3 bg-gray-100 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider border">Status</th>
-              <th className="px-6 py-3 bg-gray-200 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider border">Actions</th>
+              <th className="px-6 py-3 bg-gray-100 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider border">Actions</th>
             </tr>
           </thead>
           {/* Table Body */}
@@ -150,7 +151,9 @@ export default function OrderListScreen() {
                 <td  className='px-7 py-3 whitespace-nowrap border'>{new Date(order.shippingAddress.returnDate).toLocaleDateString('th', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
                 <td className={`px-7 py-3 whitespace-nowrap border ${order.status === 'Cancel' ? 'text-red-500' : ''}`}>{order.status}</td>
                 <td  className='px-7 py-3 whitespace-nowrap border'>
-                  <button className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded' onClick={() => openModal(order)}>Edit</button>
+                  <button className=' size-100 font-bold py-2 px-4 ' onClick={() => openModal(order)}> 
+                  <CiEdit />
+                  </button>
                 </td>
               </tr>
             ))}
@@ -235,7 +238,7 @@ export default function OrderListScreen() {
                 <button className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 mt-2 rounded mr-2" onClick={handleUpdateStatus}>Update Status</button>
               </div>
             </div>
-            <div className="md:w-1/2 bg-gray-100 p-5 mt-5" style={{ maxHeight: '450px', overflowY: 'auto'}}>
+            <div className="md:w-1/2 bg-gray-100 p-5 mt-5 rounded-md" style={{ maxHeight: '450px', overflowY: 'auto'}}>
               <h3 className="text-xl font-semibold mb-4">Summary</h3>
               <table className="w-full border-collapse">
                 <thead>
