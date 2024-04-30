@@ -252,8 +252,8 @@ export default function ProfileScreen() {
                         <table className="w-full border-collapse ">
                         <thead>
                             <tr>
-                            <th className="text-left">Product</th>
-                            <th className="text-right">Quantity</th>
+                            <th className="text-left px-10">Product</th>
+                            <th className="text-center">Quantity</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -261,9 +261,9 @@ export default function ProfileScreen() {
                             <tr key={item._id} className="border-b border-gray-400">
                             <td className='px-7 py-3 whitespace-nowrap'>
                                 <img src={item.image} alt={item.name} className="w-20 h-15 object-cover mr-4" />
-                                <td className="text-left">{item.name}</td>
+                                <td className="text-center px-3 ">{item.name}</td>
                             </td>
-                            <td className="text-right">{item.qty}</td>
+                            <td className="text-center">{item.qty}</td>
                             </tr>
                         ))}
                         </tbody>

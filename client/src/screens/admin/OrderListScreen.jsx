@@ -239,22 +239,22 @@ export default function OrderListScreen() {
               </div>
             </div>
             <div className="md:w-1/2 bg-gray-100 p-5 mt-5 rounded-md" style={{ maxHeight: '450px', overflowY: 'auto'}}>
-              <h3 className="text-xl font-semibold mb-4">Summary</h3>
-              <table className="w-full border-collapse">
-                <thead>
-                  <tr>
-                    <th className="text-left">Product</th>
-                    <th className="text-right">Quantity</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {selectedOrder.orderItems?.map(item => (
-                    <tr key={item._id} className="border-b border-gray-400">
-                      <td className='px-7 py-3 whitespace-nowrap'>
-                        <img src={item.image} alt={item.name} className="w-20 h-15 object-cover mr-4" />
-                        <td className="text-left">{item.name}</td>
-                      </td>
-                      <td className="text-right">{item.qty}</td>
+            <h3 className="text-xl font-semibold mb-4">Summary</h3>
+                        <table className="w-full border-collapse ">
+                        <thead>
+                            <tr>
+                            <th className="text-left px-10">Product</th>
+                            <th className="text-center">Quantity</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {selectedOrder.orderItems?.map(item => (
+                            <tr key={item._id} className="border-b border-gray-400">
+                            <td className='px-7 py-3 whitespace-nowrap'>
+                                <img src={item.image} alt={item.name} className="w-20 h-15 object-cover mr-4" />
+                                <td className="text-center px-3 ">{item.name}</td>
+                            </td>
+                            <td className="text-center">{item.qty}</td>
                     </tr>
                   ))}
                 </tbody>
