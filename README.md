@@ -1,5 +1,5 @@
 ##.env## ในโฟเดอร์ server
-
+-------------------------
 PORT = 5000
 NODE_ENV = development
 MONGODB_URI = mongodb+srv://selabmongodb:selabmongodbpassword@cluster0.wmpt0uv.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
