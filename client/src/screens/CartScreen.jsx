@@ -44,7 +44,7 @@ export default function CartScreen() {
         };
     
         try {
-            // เรียกใช้งาน mutation เพื่อสร้างคำสั่งซื้อ
+            // เรียกใช้งาน mutation 
             const res = await createOrder({
                 orderItems: cartItems,
                 shippingAddress: shippingAddressData,
@@ -56,7 +56,7 @@ export default function CartScreen() {
     
             navigate("/profile");
         } catch (err) {
-            toast.error(err?.data?.message || err.error);
+            toast.error("Please login");
         }
     };
     

@@ -81,6 +81,21 @@ const updateOrderToDelivered = asyncHandler(async (req, res) => {
   throw new Error("Order Not Found")
 })
 
+const deleteOrder = asyncHandler(async (req, res) => {
+  const orderId = req.params.id;
+
+  const order = await Order.findById(orderId);
+
+  if (order) {
+    await Order.deleteOne({ _id: order._id });
+    res.status(204).json({ message: "Order Deleted" });
+  } else {
+    res.status(404);
+    throw new Error("Order Not Found");
+  }
+});
+
+
 const borrowProduct = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id)
   if (order) {
@@ -123,7 +138,6 @@ const updateOrderStatus = asyncHandler(async (req, res) => {
         order.status = "Cancel";
         break;
       default:
-        // หากสถานะไม่ถูกต้อง
         res.status(400); 
         throw new Error("Invalid order status");
     }
@@ -149,4 +163,5 @@ export {
   updateOrderToDelivered,
   borrowProduct,
   updateOrderStatus,
+  deleteOrder,
 }

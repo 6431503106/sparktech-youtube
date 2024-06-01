@@ -2,24 +2,25 @@ import React, { useState, useEffect } from 'react';
 import Spinner from "../../components/Spinner";
 import { toast } from 'react-toastify';
 import { useParams } from 'react-router-dom';
-import { useGetOrdersQuery, useUpdateOrderStatusMutation} from '../../slices/orderApiSlice';
+import { useGetOrdersQuery, useUpdateOrderStatusMutation, useDeleteOrderMutation } from '../../slices/orderApiSlice';
 import { RxCross2 } from "react-icons/rx";
 import Modal from 'react-modal';
 import TablePagination from '@mui/material/TablePagination';
 import { CiEdit } from "react-icons/ci";
 
 export default function OrderListScreen() {
-  const { data: orders, isLoading, error, refetch } = useGetOrdersQuery()
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [selectedStatus, setSelectedStatus] = useState(null);
   const [updateOrderStatus, { isLoading: isUpdatingStatus }] = useUpdateOrderStatusMutation();
+  const [deleteOrder, { isLoading: loadingDelete }] = useDeleteOrderMutation();
+  const { data: orders, isLoading, error, refetch } = useGetOrdersQuery()
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [filteredOrders, setFilteredOrders] = useState([]);
   const { keyword: urlKeyword } = useParams();
   const [keyword, setKeyword] = useState(urlKeyword || "");
- 
+
   useEffect(() => {
     refetch();
   }, [orders]);
@@ -35,7 +36,7 @@ export default function OrderListScreen() {
   }
 
   if (error) {
-      toast.error(error?.data?.message || error?.error)
+    toast.error(error?.data?.message || error?.error)
   }
 
   const handleSearchFilter = () => {
@@ -44,10 +45,10 @@ export default function OrderListScreen() {
       order.user.name.toLowerCase().includes(keyword.toLowerCase()) ||
       order.status.toLowerCase().includes(keyword.toLowerCase())
     );
-  
+
     setFilteredOrders(filteredOrders);
   };
-  
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -58,8 +59,8 @@ export default function OrderListScreen() {
   };
 
   const handleStatusChange = (e) => {
-    const newStatus = e.target.value; 
-    setSelectedStatus(newStatus); 
+    const newStatus = e.target.value;
+    setSelectedStatus(newStatus);
 
     setSelectedOrder(prevState => ({
       ...prevState,
@@ -69,11 +70,11 @@ export default function OrderListScreen() {
 
   const handleUpdateStatus = () => {
     if (!selectedOrder || !selectedStatus) {
-      
+
       toast.error('Please select an order and a status.');
       return;
     }
-  
+
     updateOrderStatusHandler(selectedOrder._id, selectedStatus);
   };
 
@@ -82,9 +83,21 @@ export default function OrderListScreen() {
       await updateOrderStatus({ orderId, status });
       toast.success(`Status updated to ${status}`);
       refetch()
-      closeModal(); 
+      closeModal();
     } catch (error) {
       toast.error(error.message);
+    }
+  };
+
+  const handleDeleteOrder = async (orderId) => {
+    if (window.confirm('Are you sure you want to delete this order?')) {
+      try {
+        await deleteOrder(orderId);
+        toast.success('Order deleted successfully');
+        refetch();
+      } catch (error) {
+        toast.error(error.message);
+      }
     }
   };
 
@@ -144,15 +157,18 @@ export default function OrderListScreen() {
             {/* Visible Orders */}
             {visibleOrders.map((order) => (
               <tr key={order._id} className='text-center'>
-                <td  className='px-7 py-3 whitespace-nowrap border'>{order._id}</td>
-                <td  className='px-7 py-3 whitespace-nowrap border'>{order.user?.name}</td>
-                <td  className='px-7 py-3 whitespace-nowrap border'>{new Date(order.createdAt).toLocaleDateString('th', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
-                <td  className='px-7 py-3 whitespace-nowrap border'>{new Date(order.shippingAddress.borrowingDate).toLocaleDateString('th', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
-                <td  className='px-7 py-3 whitespace-nowrap border'>{new Date(order.shippingAddress.returnDate).toLocaleDateString('th', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
+                <td className='px-7 py-3 whitespace-nowrap border'>{order._id}</td>
+                <td className='px-7 py-3 whitespace-nowrap border'>{order.user?.name}</td>
+                <td className='px-7 py-3 whitespace-nowrap border'>{new Date(order.createdAt).toLocaleDateString('th', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
+                <td className='px-7 py-3 whitespace-nowrap border'>{new Date(order.shippingAddress.borrowingDate).toLocaleDateString('th', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
+                <td className='px-7 py-3 whitespace-nowrap border'>{new Date(order.shippingAddress.returnDate).toLocaleDateString('th', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
                 <td className={`px-7 py-3 whitespace-nowrap border ${order.status === 'Cancel' ? 'text-red-500' : ''}`}>{order.status}</td>
-                <td  className='px-7 py-3 whitespace-nowrap border'>
-                  <button className=' size-100 font-bold py-2 px-4 ' onClick={() => openModal(order)}> 
-                  <CiEdit />
+                <td className='px-7 py-3 whitespace-nowrap border'>
+                  <button className=' size-100 font-bold py-2 px-4 ' onClick={() => openModal(order)}>
+                    <CiEdit />
+                  </button>
+                  <button className='size-100 font-bold py-2 px-4 ml-2' onClick={() => handleDeleteOrder(order._id)}>
+                    <RxCross2 />
                   </button>
                 </td>
               </tr>
@@ -205,7 +221,7 @@ export default function OrderListScreen() {
             </button>
           </div>
         </div>
-        {/* Render selected order details */} 
+        {/* Render selected order details */}
         {selectedOrder && (
           <div className="flex flex-col md:flex-row justify-center items-start">
             <div className="md:w-2/3 p-4">
@@ -227,8 +243,8 @@ export default function OrderListScreen() {
               <div className="mb-4">
                 <h3 className="text-lg font-semibold mb-2">Status:</h3>
                 <select
-                  value={selectedOrder.status} 
-                  onChange={handleStatusChange} 
+                  value={selectedOrder.status}
+                  onChange={handleStatusChange}
                   className="w-full border border-gray-300 rounded-md px-3 py-2"
                 >
                   <option value="Confirm">Confirm</option>
@@ -238,23 +254,23 @@ export default function OrderListScreen() {
                 <button className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 mt-2 rounded mr-2" onClick={handleUpdateStatus}>Update Status</button>
               </div>
             </div>
-            <div className="md:w-1/2 bg-gray-100 p-5 mt-5 rounded-md" style={{ maxHeight: '450px', overflowY: 'auto'}}>
-            <h3 className="text-xl font-semibold mb-4">Summary</h3>
-                        <table className="w-full border-collapse ">
-                        <thead>
-                            <tr>
-                            <th className="text-left px-10">Product</th>
-                            <th className="text-center">Quantity</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {selectedOrder.orderItems?.map(item => (
-                            <tr key={item._id} className="border-b border-gray-400">
-                            <td className='px-7 py-3 whitespace-nowrap'>
-                                <img src={item.image} alt={item.name} className="w-20 h-15 object-cover mr-4" />
-                                <td className="text-center px-3 ">{item.name}</td>
-                            </td>
-                            <td className="text-center">{item.qty}</td>
+            <div className="md:w-1/2 bg-gray-100 p-5 mt-5 rounded-md" style={{ maxHeight: '450px', overflowY: 'auto' }}>
+              <h3 className="text-xl font-semibold mb-4">Summary</h3>
+              <table className="w-full border-collapse ">
+                <thead>
+                  <tr>
+                    <th className="text-left px-10">Product</th>
+                    <th className="text-center">Quantity</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {selectedOrder.orderItems?.map(item => (
+                    <tr key={item._id} className="border-b border-gray-400">
+                      <td className='px-7 py-3 whitespace-nowrap'>
+                        <img src={item.image} alt={item.name} className="w-20 h-15 object-cover mr-4" />
+                        <td className="text-center px-3 ">{item.name}</td>
+                      </td>
+                      <td className="text-center">{item.qty}</td>
                     </tr>
                   ))}
                 </tbody>

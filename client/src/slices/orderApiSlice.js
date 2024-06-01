@@ -1,5 +1,6 @@
 import { apiSlice } from "./apiSlice";
 import { BACKEND_URL, ORDERS_URL } from "../constants";
+import { deleteOrder } from "../../../server/controllers/orderController";
 
 export const orderApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
@@ -61,6 +62,18 @@ export const orderApiSlice = apiSlice.injectEndpoints({
         body: { status }, // ส่ง status ในร่างของคำขอ
       }),
     }),
+    deleteOrder: builder.mutation({
+      query: id => ({
+        url: `${ORDERS_URL}/${id}`,
+        method: "DELETE",
+      }),
+    }),
+    deleteOrder: builder.mutation({
+      query: (orderId) => ({
+        url: `${ORDERS_URL}/${orderId}`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
@@ -73,4 +86,5 @@ export const {
   useGetOrdersQuery,
   useDeliverOrderMutation,
   useUpdateOrderStatusMutation,
+  useDeleteOrderMutation,
 } = orderApiSlice;

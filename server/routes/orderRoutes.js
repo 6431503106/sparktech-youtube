@@ -8,13 +8,13 @@ import {
   getOrders,
   updateOrderToDelivered,
   updateOrderStatus,
+  deleteOrder,
 } from "../controllers/orderController.js"
 const router = express.Router()
 
-router.route("/").post(protect, addOrderItems).get(protect, admin, getOrders)
-router.route("/user-orders").get(protect, getUserOrders)
-router.route("/:id").get(protect, getOrderById)
-router.route("/deliver/:id").patch(protect, admin, updateOrderToDelivered)
+router.route("/").post(protect, addOrderItems).get(protect, admin, getOrders);
+router.route("/user-orders").get(protect, getUserOrders);
+router.route("/:id").get(protect, getOrderById).delete(protect, admin, deleteOrder);
+router.route("/deliver/:id").patch(protect, admin, updateOrderToDelivered);
 router.route("/status/:id").patch(protect, updateOrderStatus);
-
 export default router

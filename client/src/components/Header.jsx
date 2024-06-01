@@ -25,18 +25,6 @@ const Header = () => {
 
     let isLoggedOut = false; // เพิ่มตัวแปรเพื่อตรวจสอบสถานะการล็อคอิน
 
-const handleLogout = async () => {
-    try {
-        await logoutApi().unwrap();
-        dispatch(logout());
-        isLoggedOut = true; // ตั้งค่าให้เป็น true เมื่อล็อคเอาท์
-        navigate("/login");
-        toast.success("Logged Out Successfully");
-    } catch (error) {
-        toast.error(error?.data?.message || error?.error);
-    }
-}
-
 const handleLogin = async () => {
     // ตรวจสอบว่ามีการล็อคเอาท์หรือไม่ก่อนเข้าสู่ระบบ
     if (isLoggedOut) {
@@ -51,6 +39,17 @@ const handleLogin = async () => {
         }
     } else {
         // กรณีที่ไม่มีการล็อคเอาท์ อาจทำการเข้าสู่ระบบตรงนี้
+    }
+}
+
+const handleLogout = async () => {
+    try {
+        await logoutApi().unwrap()
+        dispatch(logout())
+        navigate("/login")
+        toast.success("Logged Out Successfully")
+    } catch (error) {
+        toast.error(error?.data?.message || error?.error)
     }
 }
 
