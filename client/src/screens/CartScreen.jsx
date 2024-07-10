@@ -57,6 +57,7 @@ export default function CartScreen() {
             navigate("/profile");
         } catch (err) {
             toast.error("Please login");
+            navigate("/login");
         }
     };
     

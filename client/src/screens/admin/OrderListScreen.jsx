@@ -167,7 +167,7 @@ export default function OrderListScreen() {
                   <button className=' size-100 font-bold py-2 px-4 ' onClick={() => openModal(order)}>
                     <CiEdit />
                   </button>
-                  <button className='size-100 font-bold py-2 px-4 ml-2' onClick={() => handleDeleteOrder(order._id)}>
+                  <button className='size-100 font-bold py-2 px-4 ml-2 red' onClick={() => handleDeleteOrder(order._id)}>
                     <RxCross2 />
                   </button>
                 </td>
