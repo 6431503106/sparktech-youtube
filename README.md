@@ -26,6 +26,8 @@ npm install
 npm i
 npm install -D tailwindcss postcss autoprefixer
 npx tailwindcss init
+npm install uuid //เพิ่มมาเพิ่อจัดการ id
+
 ใส่โค้ดนี้ที่หน้า  tailwindcss.config.js
 /** @type {import('tailwindcss').Config} */
 export default {
