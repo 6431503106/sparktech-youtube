@@ -11,8 +11,12 @@
   "dependencies": {
     "@ant-design/icons": "^5.3.7",
     "@mui/material": "^5.15.15",
+<<<<<<< HEAD
     "antd": "^5.17.2",
     "bootstrap": "^5.3.3",
+=======
+    "axios": "^1.7.2",
+>>>>>>> 823203878becbd0a4ccb34da099ae7c8865cb07e
     "concurrently": "^8.2.2",
     "mongoose": "^8.3.0",
     "react-bootstrap": "^2.10.2",

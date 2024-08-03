@@ -1,13 +1,18 @@
-import React from 'react'
+/*import React from 'react'
 import { useDeliverOrderMutation } from '../slices/orderApiSlice'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import Spinner from '../components/Spinner'
 import { useGetOrderDetailsQuery } from '../slices/orderApiSlice'
+*/
+
+import { toast } from "react-toastify";
 
 export default function OrderScreen() {
-    const navigate = useNavigate()
+    toast.error('Deleted this page navigate /profile')
+}
+    /*const navigate = useNavigate()
     const { id: orderId } = useParams()
     const { userInfo } = useSelector(state => state.user)
     const { data: order, isLoading, error, refetch } = useGetOrderDetailsQuery(orderId)
@@ -95,8 +100,8 @@ export default function OrderScreen() {
                             Back
                 </button>
                 </div>
-                {loadingStripe && <Spinner />}
+                {<Spinner />}
             </div>
         </div >
     )
-}
+}*/

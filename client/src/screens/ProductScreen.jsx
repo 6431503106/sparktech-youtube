@@ -25,17 +25,16 @@ export default function ProductScreen() {
     }
 
     const handleCreateReview = async e => {
-        e.preventDefault()
+        e.preventDefault();
         try {
-            const res = await createReview({ productId, rating: userRating, comment: userComment }).unwrap()
-            refetch()
-            toast.success(res.message)
-            setUserComment("")
-
+            const res = await createReview({ productId, rating: userRating, comment: userComment }).unwrap();
+            refetch(); // ทำให้ข้อมูลเป็นปัจจุบัน
+            toast.success(res.message);
+            setUserComment("");
         } catch (error) {
-            toast.error(error?.data?.message || error?.error)
+            toast.error(error?.data?.message || error?.error);
         }
-    }
+    };
 
     return (
         <div  class="content-wrapper">

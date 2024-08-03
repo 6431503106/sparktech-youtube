@@ -54,11 +54,17 @@ export const orderApiSlice = apiSlice.injectEndpoints({
         method: "PATCH",
       }),
     }),
-    updateOrderStatus: builder.mutation({
-      query: ({ orderId, status }) => ({
-        url: `${ORDERS_URL}/status/${orderId}`,
+    updateOrderItemStatus: builder.mutation({
+      query: ({ orderId, itemId, status }) => ({
+        url: `${ORDERS_URL}/${orderId}/items/${itemId}/status`,
         method: "PATCH",
-        body: { status }, // ส่ง status ในร่างของคำขอ
+        body: { status },
+      }),
+    }),
+    deleteOrder: builder.mutation({
+      query: id => ({
+        url: `${ORDERS_URL}/${id}`,
+        method: "DELETE",
       }),
     }),
   }),
@@ -72,5 +78,6 @@ export const {
   usePayWithStripeMutation,
   useGetOrdersQuery,
   useDeliverOrderMutation,
-  useUpdateOrderStatusMutation,
+  useUpdateOrderItemStatusMutation,
+  useDeleteOrderMutation,
 } = orderApiSlice;

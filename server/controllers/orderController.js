@@ -81,6 +81,21 @@ const updateOrderToDelivered = asyncHandler(async (req, res) => {
   throw new Error("Order Not Found")
 })
 
+const deleteOrder = asyncHandler(async (req, res) => {
+  const orderId = req.params.id;
+
+  const order = await Order.findById(orderId);
+
+  if (order) {
+    await Order.deleteOne({ _id: order._id });
+    res.status(204).json({ message: "Order Deleted" });
+  } else {
+    res.status(404);
+    throw new Error("Order Not Found");
+  }
+});
+
+
 const borrowProduct = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id)
   if (order) {
@@ -99,47 +114,35 @@ const borrowProduct = asyncHandler(async (req, res) => {
   }
 })
 
-const updateOrderStatus = asyncHandler(async (req, res) => {
-  const { id } = req.params; 
-  const { status } = req.body; 
+const updateOrderItemStatus = asyncHandler(async (req, res) => {
+  const { orderId, itemId } = req.params;
+  const { status } = req.body;
 
-  
-  const order = await Order.findById(id);
+  try {
+    // Find the order and update the status of the specified item
+    const order = await Order.findOneAndUpdate(
+      { 
+        _id: orderId,
+        'orderItems._id': itemId
+      },
+      {
+        $set: {
+          'orderItems.$.status': status
+        }
+      },
+      { new: true } // To return the updated order
+    );
 
-  // ถ้าพบคำสั่งซื้อ
-  if (order) {
-    
-    switch (status) {
-      case "Confirm":
-        
-        order.status = "Confirm";
-        break;
-      case "Pending":
-        
-        order.status = "Pending";
-        break;
-      case "Cancel":
-        
-        order.status = "Cancel";
-        break;
-      default:
-        // หากสถานะไม่ถูกต้อง
-        res.status(400); 
-        throw new Error("Invalid order status");
+    if (!order) {
+      return res.status(404).json({ message: 'Order or item not found' });
     }
 
-    
-    const updatedOrder = await order.save();
-
-    
-    res.json(updatedOrder);
-  } else {
-    
-    res.status(404); 
-    throw new Error("Order not found");
+    res.json(order);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ message: 'Server Error' });
   }
 });
-
 
 export {
   addOrderItems,
@@ -148,5 +151,6 @@ export {
   getOrders,
   updateOrderToDelivered,
   borrowProduct,
-  updateOrderStatus,
+  deleteOrder,
+  updateOrderItemStatus,
 }

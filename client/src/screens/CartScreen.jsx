@@ -1,27 +1,30 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import { removeFromCart } from '../slices/cartSlice'
-import { toast } from 'react-toastify'
-import { clearCartItems } from '../slices/cartSlice'
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { removeFromCart, clearCartItems } from '../slices/cartSlice';
+import { toast } from 'react-toastify';
 import { useCreateOrderMutation } from '../slices/orderApiSlice';
+<<<<<<< HEAD
 import '../Header.css'; // เพิ่มไฟล์ CSS
+=======
+import { v4 as uuidv4 } from 'uuid';
+import { useGetProductsQuery } from '../slices/productsApiSlice';
+>>>>>>> 823203878becbd0a4ccb34da099ae7c8865cb07e
 
 
 export default function CartScreen() {
-    const cart = useSelector(state => state.cart)
+    const cart = useSelector(state => state.cart);
     const { cartItems } = cart;
-    const { shippingAddress } = cart
-    const [reason, setReason] = useState(shippingAddress?.address || "")
-    const [borrowingDate, setBorrowingDate] = useState("")
+    const { shippingAddress } = cart;
+    const [reason, setReason] = useState(shippingAddress?.address || "");
+    const [borrowingDate, setBorrowingDate] = useState("");
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
-    const [createOrder, { isLoading }] = useCreateOrderMutation()
+    const [createOrder, { isLoading }] = useCreateOrderMutation();
 
     const totalItems = cartItems.reduce((acc, item) => acc + +item.qty, 0);
+    const { data: products } = useGetProductsQuery(); // Fetch products
 
     const handleDeleteItem = id => {
         dispatch(removeFromCart(id));
@@ -29,41 +32,75 @@ export default function CartScreen() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
-        // กำหนด borrowingDateObject จาก borrowingDate ที่ผู้ใช้เลือก
+
+        if (cartItems.length === 0) {
+            toast.error("Your cart is empty.");
+            return;
+        }
+        if (!reason) {
+            toast.error("Please fulfill your reason.");
+            return;
+        }
+        if (!borrowingDate) {
+            toast.error("Please fulfill borrowing date.");
+            return;
+        }
+
         const borrowingDateObject = new Date(borrowingDate);
-    
-        // กำหนด returnDateObject โดยใช้ borrowingDateObject และเพิ่ม 7 วัน
         const returnDateObject = new Date(borrowingDateObject);
         returnDateObject.setDate(returnDateObject.getDate() + 7);
-    
-        // สร้าง Object ของ shippingAddress โดยรวมทุกข้อมูลที่ผู้ใช้กรอกและ returnDate ที่คำนวณได้
+
         const shippingAddressData = {
             borrowingDate,
             returnDate: returnDateObject,
             reason
         };
-    
+
+        // Check stock availability
+        const orderItems = cartItems.map(item => {
+            const product = products.find(p => p._id === item._id);
+            if (product && item.qty > product.countInStock) {
+                toast.error(`Not enough stock for ${product.name}. Available: ${product.countInStock}`);
+                throw new Error(`Not enough stock for ${product.name}`);
+            }
+            return {
+                ...item,
+                itemId: uuidv4() // Generate a new UUID for each item
+            };
+        });
+
         try {
-            // เรียกใช้งาน mutation เพื่อสร้างคำสั่งซื้อ
             const res = await createOrder({
-                orderItems: cartItems,
+                orderItems,
                 shippingAddress: shippingAddressData,
             }).unwrap();
-    
+
+            // Update stock after creating order
+            orderItems.forEach(async item => {
+                const product = products.find(p => p._id === item._id);
+                if (product) {
+                    await updateProductStock(product._id, product.countInStock - item.qty);
+                }
+            });
+
             dispatch(clearCartItems());
-    
             toast.success("The loan request is complete!");
-    
             navigate("/profile");
         } catch (err) {
             toast.error(err?.data?.message || err.error);
         }
     };
-    
+
+    const updateProductStock = async (id, newStock) => {
+        // Call your update product mutation or API here
+        // For example:
+        // await updateProduct({ id, countInStock: newStock });
+    };
+
     const handleCancel = () => {
-        navigate("/")
+        navigate("/");
     }
+    
     return (
         <div class="content-wrapper flex justify-between">
             <div>
@@ -114,7 +151,7 @@ export default function CartScreen() {
                     <input
                         type="date"
                         id="borrowingDate"
-                        className="bg-white border border-gray-300 p-2 rounded-md mt-2 w-full"
+                        className="bg-white border border-gray-300 p-2 rounded-md mt-2 w-full uppercase"
                         value={borrowingDate}
                         onChange={e => setBorrowingDate(e.target.value)}
                     />
@@ -122,7 +159,11 @@ export default function CartScreen() {
 
                 <div className="mb-4">
                 <label htmlFor="returnDate" className="text-gray-700">
+<<<<<<< HEAD
                     Return Date: DD/MM/YY
+=======
+                    Return Date: -
+>>>>>>> 823203878becbd0a4ccb34da099ae7c8865cb07e
                 </label>
                 <p>{borrowingDate ? new Date(new Date(borrowingDate).getTime() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString('th', { month: '2-digit', day: '2-digit', year: 'numeric' }) : ''}</p>
                 </div>

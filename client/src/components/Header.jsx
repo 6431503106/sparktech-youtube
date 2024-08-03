@@ -35,7 +35,16 @@ const Header = () => {
     const { cartItems } = useSelector(state => state.cart);
     const { userInfo } = useSelector(state => state.user);
 
+<<<<<<< HEAD
     const handleLogout = async () => {
+=======
+
+    let isLoggedOut = false; // เพิ่มตัวแปรเพื่อตรวจสอบสถานะการล็อคอิน
+
+const handleLogin = async () => {
+    // ตรวจสอบว่ามีการล็อคเอาท์หรือไม่ก่อนเข้าสู่ระบบ
+    if (isLoggedOut) {
+>>>>>>> 823203878becbd0a4ccb34da099ae7c8865cb07e
         try {
             await logoutApi().unwrap();
             dispatch(logout());
@@ -46,6 +55,90 @@ const Header = () => {
         } catch (error) {
             toast.error(error?.data?.message || error?.error);
         }
+<<<<<<< HEAD
+=======
+    } else {
+        // กรณีที่ไม่มีการล็อคเอาท์ อาจทำการเข้าสู่ระบบตรงนี้
+    }
+}
+
+const handleLogout = async () => {
+    try {
+        await logoutApi().unwrap()
+        dispatch(logout())
+        navigate("/login")
+        toast.success("Logged Out Successfully")
+    } catch (error) {
+        toast.error(error?.data?.message || error?.error)
+    }
+}
+
+    const renderProfileButton = () => {
+        return (
+            <>
+                <button
+                    /*className="text-white flex items-center"*/
+                    onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
+                    className="text-white flex items-center"
+                >
+                    <FiUser className="mr-1" />
+                    {userInfo?.name}
+                    {isProfileMenuOpen ? <FaCaretUp /> : <FaCaretDown />}
+                </button>
+                <ul
+                    className={`absolute ${isProfileMenuOpen ? 'block' : 'hidden'
+                        } bg-gray-800 p-2 mt-2 space-y-2 text-white border rounded-md`}
+                >
+                    <li>
+                        {<Link to="/profile">
+                            <FiUser className="mr-1" />
+                            Profile
+                        </Link>}
+                    </li>
+                    <li>
+                        {<Link onClick={handleLogout}>
+                            <FiLogOut className="mr-1" />
+                            Logout
+                        </Link>}
+                    </li>
+                </ul>
+            </>
+        )
+    }
+    const renderAdminButton = () => {
+        return (
+            <>
+                <button
+                    onClick={() => setIsAdminMenuOpen(!isAdminMenuOpen)}
+                    className="text-white flex items-center"
+                >
+                    <FiUser className="mr-1" />
+                    Admin
+                    {isAdminMenuOpen ? <FaCaretUp /> : <FaCaretDown />}
+                </button>
+                <ul
+                    className={`absolute ${isAdminMenuOpen ? 'block' : 'hidden'
+                        } bg-gray-800 p-2 mt-2 space-y-2 text-white border rounded-md`}
+                >
+                    <li>
+                        <Link to="/admin/users">
+                            Users
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/admin/products">
+                            Products
+                        </Link>
+                    </li>
+                    {<li>
+                        <Link to="/admin/orders">
+                            Request
+                        </Link>
+                    </li>}
+                </ul>
+            </>
+        )
+>>>>>>> 823203878becbd0a4ccb34da099ae7c8865cb07e
     }
 
     const toggleSidebar = () => {
