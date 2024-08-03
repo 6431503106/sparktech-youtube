@@ -9,6 +9,7 @@ import { setCredentials } from '../slices/userSlice'
 import Modal from 'react-modal';
 import { RxCross2 } from "react-icons/rx";
 import { FaRegEye } from "react-icons/fa";
+import '../Header.css'; // เพิ่มไฟล์ CSS
 
 export default function ProfileScreen() {
 
@@ -92,7 +93,8 @@ export default function ProfileScreen() {
 
     // Render the ProfileScreen component
     return (
-        <div className="flex">
+        <div class="content-wrapper">
+            
             {/* Profile Information */}
             <div className="w-1/4 p-4">
                 <h1 className="text-xl font-semibold mb-4">Profile</h1>
@@ -173,8 +175,8 @@ export default function ProfileScreen() {
                             <td className='px-7 py-3 text-center '>{order.orderItems.map(item => item.name).join(", ")}</td>
                             <td  className='px-7 py-3 whitespace-nowrap '>{order._id.slice(-3)}</td>
                             <td className='px-7 py-3 whitespace-nowrap  text-center'>{order.orderItems.map(item => item.qty).join(", ")}</td>
-                            <td className='px-7 py-3 whitespace-nowrap '>{new Date(order.shippingAddress.borrowingDate).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
-                            <td className='px-7 py-3 whitespace-nowrap '>{new Date(order.shippingAddress.returnDate).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
+                            <td className='px-7 py-3 whitespace-nowrap '>{new Date(order.shippingAddress.borrowingDate).toLocaleDateString('th', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
+                            <td className='px-7 py-3 whitespace-nowrap '>{new Date(order.shippingAddress.returnDate).toLocaleDateString('th', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
                             <td className={`px-7 py-3 whitespace-nowrap  sm:px-6 md:px-8 ${order.status === 'Cancel' ? 'text-red-500' : ''}`}>
                                 {order.status}
                             </td>

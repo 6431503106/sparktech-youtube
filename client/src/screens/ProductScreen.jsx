@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { addToCart } from '../slices/cartSlice'
-
+import '../Header.css'; // เพิ่มไฟล์ CSS
 export default function ProductScreen() {
     const { id: productId } = useParams()
     const { data: product, isLoading, error, refetch } = useGetProductDetailsQuery(productId)
@@ -38,10 +38,7 @@ export default function ProductScreen() {
     }
 
     return (
-        <div className="container mx-auto mt-8 p-4">
-            <Link to={'/'}>
-                <button className="bg-gray-800 text-white px-4 py-2 rounded-md mb-4">Go Back</button>
-            </Link>
+        <div  class="content-wrapper">
             {isLoading ? (<Spinner />) : error ? toast.error(error?.data?.message || error?.error) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="md:col-span-1">
@@ -70,12 +67,18 @@ export default function ProductScreen() {
                                 ))}
                             </select>
                         </div>
+                        <div className="justify-between">
                         <button
                             className="bg-yellow-500 text-white px-4 py-2 rounded-md mt-4 hover:bg-yellow-600"
                             onClick={addtoCartHandler}
                         >
                             Add To Cart
                         </button>
+                        
+                        <Link to={'/'}>
+                            <button className="bg-gray-800 text-white px-4 py-2 rounded-md mb-4 mt-4">Go Back</button>
+                        </Link>
+                    </div>
                     </div>
                 </div>
             )}

@@ -8,6 +8,7 @@ import { BACKEND_URL } from '../constants'
 import { useDispatch } from 'react-redux'
 import { setCredentials } from '../slices/userSlice'
 import { useParams } from 'react-router-dom'
+import '../Header.css'; // เพิ่มไฟล์ CSS
 
 export default function HomeScreen() {
     const { keyword } = useParams()
@@ -38,12 +39,18 @@ export default function HomeScreen() {
     }
 
     return (
-        <>
-            <div className='grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4'>
+        // JSX
+<>
+    <div className="container">
+        <div className="content-wrapper">
+            <div className="wrapper grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4">
                 {products?.map((product, i) => (
                     <Product key={i} product={product} />
                 ))}
             </div>
-        </>
+        </div>
+    </div>
+</>
+
     )
 }

@@ -5,6 +5,7 @@ import Spinner from '../../components/Spinner';
 import { toast } from 'react-toastify';
 import TablePagination from '@mui/material/TablePagination';
 
+
 export default function ProductListScreen() {
     const navigate = useNavigate();
     const { data: products, isLoading, error, refetch } = useGetProductsQuery();
@@ -78,34 +79,38 @@ export default function ProductListScreen() {
     const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
 
     return (
+        
         <div>
-            <div>
-                <h2 className="text-2xl font-semibold mb-2">Products</h2>
-                <div className="flex items-center justify-between mb-4">
-                    <div>
-                        <div className="flex justify-between mb-2 sm:flex">
-                            <input
-                                type="text"
-                                placeholder="Search"
-                                className="ml-2 px-5 rounded-md bg-gray-100 text-back"
-                                value={keyword}
-                                onChange={e => setKeyword(e.target.value)}
-                            />
-                            <button className="bg-red-500 text-white py-1 px-4 rounded-md ml-2" onClick={handleSearchFilter}>
-                                Search
-                            </button>
-                        </div>
+            <div class="content-wrapper justify-start sidebar-open">
+                <h2 className="text-3xl font-semibold mb-3">Products</h2>
+            </div>
+
+            <div className="content-menu flex justify-between mb-2 sidebar-open">
+                    <div className="flex">
+                        <input
+                            type="text"
+                            placeholder="Search"
+                            className="ml-2 px-5 rounded-md bg-gray-100 text-back"
+                            value={keyword}
+                            onChange={e => setKeyword(e.target.value)}
+                        />
+                        <button className="bg-red-500 text-white py-2 px-4 rounded-md ml-2" onClick={handleSearchFilter}>
+                            Search
+                        </button>
                     </div>
+                    <div className="flex">
                     <button
-                        className="bg-blue-500 text-white px-4 py-2 rounded-md mb-6"
+                        className="bg-blue-500 text-white px-4 py-2 rounded-md ml-2"
                         onClick={createProductHandler}
                     >
                         Create Product
                     </button>
+                    </div>
                     {loadingCreate && <Spinner />}
                 </div>
-            </div>
-            <div className="overflow-x-auto">
+            
+            
+            <div className="content-table">
                 <table className="min-w-full divide-y divide-gray-200">
                     <thead>
                         <tr>
@@ -169,5 +174,6 @@ export default function ProductListScreen() {
                 onRowsPerPageChange={handleChangeRowsPerPage}
             />
         </div>
+        
     );
 }

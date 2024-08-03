@@ -1,0 +1,42 @@
+
+
+.nav-item {
+    margin-bottom: 8px;
+}
+
+.nav-treeview {
+    padding-left: 20px;
+}
+
+.collapse-inner {
+    padding: 8px 0;
+}
+.main-sidebar {
+    display: none;
+}
+
+.main-sidebar.open {
+    display: block;
+}
+
+/* CSS */
+.content-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* จัด content ไปอยู่ด้านบน */
+    padding-top: 20px; /* เพิ่มระยะห่างด้านบน */
+}
+
+.main-sidebar {
+    /* CSS สำหรับ sidebar */
+    width: 250px; /* กำหนดความกว้างของ sidebar */
+    /* เพิ่ม CSS เพื่อปรับตำแหน่งของ sidebar */
+}
+
+/* CSS ของ Bootstrap */
+.container {
+    max-width: 1200px; /* กำหนดความกว้างสูงสุดของ content */
+    margin-right: auto; /* จัด content ไปทางขวาของหน้า */
+    margin-left: auto; /* จัด content ไปทางซ้ายของหน้า */
+}
+

@@ -1,12 +1,11 @@
-import React from 'react'
+import React from 'react';
 
-export default function Footer() {
-    const currentYear = new Date().getFullYear()
+export default function Footer({ isSidebarOpen }) {
     return (
-        <footer className=' bg-gray-800 text-white py-3'>
+        <footer className={`footer-wrapper  text-white py-3 ${isSidebarOpen ? '' : 'sidebar-closed'}`}>
             <div className="container mx-auto text-center">
-                <p className='text-sm'> For SE &copy; {currentYear}</p>
+                <p className='text-sm'> For SE &copy; {new Date().getFullYear()}</p>
             </div>
         </footer>
-    )
+    );
 }

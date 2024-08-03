@@ -6,6 +6,7 @@ import { removeFromCart } from '../slices/cartSlice'
 import { toast } from 'react-toastify'
 import { clearCartItems } from '../slices/cartSlice'
 import { useCreateOrderMutation } from '../slices/orderApiSlice';
+import '../Header.css'; // เพิ่มไฟล์ CSS
 
 
 export default function CartScreen() {
@@ -64,13 +65,8 @@ export default function CartScreen() {
         navigate("/")
     }
     return (
-        <div className="flex flex-col md:flex-row justify-center items-start mx-auto">
+        <div class="content-wrapper flex justify-between">
             <div>
-                <Link to={'/'}>
-                    <button className="bg-gray-800 text-white px-4 py-2 rounded-md mb-4">Back</button>
-                </Link>
-            </div>
-            <div className="md:w-2/3 p-4">
                 <h2 className="text-2xl font-semibold mb-4">Cart</h2>
                 {cartItems.length !== 0 ?
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -89,7 +85,7 @@ export default function CartScreen() {
                     )}
             </div>
 
-                <div className="md:w-1/3 bg-gray-100 p-4 flex flex-col justify-between">
+                <div >
                 <div>
                     <h2 className="text-xl font-semibold">Subtotal</h2>
                     <p className="text-gray-600">Total Items: {totalItems} </p>
@@ -113,7 +109,7 @@ export default function CartScreen() {
 
                 <div className="mb-4">
                     <label htmlFor="borrowingDate" className="text-gray-700">
-                        Borrowing Date: MM/DD/YY
+                        Borrowing Date: DD/MM/YY
                     </label>
                     <input
                         type="date"
@@ -126,9 +122,9 @@ export default function CartScreen() {
 
                 <div className="mb-4">
                 <label htmlFor="returnDate" className="text-gray-700">
-                    Return Date: MM/DD/YY
+                    Return Date: DD/MM/YY
                 </label>
-                <p>{borrowingDate ? new Date(new Date(borrowingDate).getTime() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }) : ''}</p>
+                <p>{borrowingDate ? new Date(new Date(borrowingDate).getTime() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString('th', { month: '2-digit', day: '2-digit', year: 'numeric' }) : ''}</p>
                 </div>
 
                 <div className="flex justify-between">

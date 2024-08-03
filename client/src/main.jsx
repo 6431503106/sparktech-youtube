@@ -24,6 +24,8 @@ import OrderListScreen from './screens/admin/OrderListScreen.jsx'
 import ProductEditScreen from './screens/admin/ProductEditScreen.jsx'
 import UserEditScreen from './screens/admin/UserEditScreen.jsx'
 import AddScreen from './screens/admin/AddScreen.jsx';
+import ConfirmListScreen from './screens/admin/ConfirmListScreen.jsx'
+import CancelListScreen from './screens/admin/CancelListScreen.jsx'
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={< App />}>
@@ -48,6 +50,8 @@ const router = createBrowserRouter(
         <Route path='/admin/users/:id/edit' element={<UserEditScreen />} />
         <Route path='/admin/products' element={<ProductListScreen />} />
         <Route path='/admin/orders' element={<OrderListScreen />} />
+        <Route path='/admin/confirm' element={<ConfirmListScreen />} />
+        <Route path='/admin/cancel' element={<CancelListScreen />} />
         <Route path='/admin/product/:id/edit' element={<ProductEditScreen />} />
         <Route path='/admin/add' element={<AddScreen />} />
       </Route>

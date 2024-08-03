@@ -9,9 +9,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@ant-design/icons": "^5.3.7",
     "@mui/material": "^5.15.15",
+    "antd": "^5.17.2",
+    "bootstrap": "^5.3.3",
     "concurrently": "^8.2.2",
     "mongoose": "^8.3.0",
+    "react-bootstrap": "^2.10.2",
     "react-modal": "^3.16.1",
     "shortid": "^2.2.16"
   },

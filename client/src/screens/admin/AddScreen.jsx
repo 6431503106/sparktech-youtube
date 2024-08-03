@@ -53,7 +53,7 @@ export default function AddScreen() {
     };
 
     return (
-        <div className="container mx-auto mt-8 mb-28 p-4 max-w-md ">
+        <div className="content-wrapper flex flex-col justify-center items-center">
             <h2 className="text-2xl font-semibold mb-4">Add New User</h2>
             <form onSubmit={handleAdd}>
                 <div className="mb-4">

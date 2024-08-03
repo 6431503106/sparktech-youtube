@@ -34,7 +34,7 @@ export default function UserEditScreen() {
     }, [user])
 
     return (
-        <div className="flex flex-col justify-center items-center">
+        <div className="content-wrapper flex flex-col justify-center items-center">
             <h2 className="text-2xl font-bold my-4">Edit User</h2>
             <form className="w-full max-w-sm" onSubmit={handleUpdateUser}>
                 <div className="mb-4">

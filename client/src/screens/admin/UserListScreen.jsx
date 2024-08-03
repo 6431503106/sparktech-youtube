@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Spinner from '../../components/Spinner';
 import TablePagination from '@mui/material/TablePagination';
+import '../../Header.css'; // เพิ่มไฟล์ CSS
 
 export default function UserListScreen() {
     const { data: users, isLoading, error, refetch } = useGetUsersQuery();
@@ -69,33 +70,33 @@ export default function UserListScreen() {
     const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
 
     return (
-        <div>
-            <div>
-                <h2 className="text-2xl font-semibold mb-2">Users</h2>
-                <div className="flex items-center justify-between mb-4">
-                    <div>
-                        <div className="flex justify-between mb-2 sm:flex">
-                            <input
-                                type="text"
-                                placeholder="Search"
-                                className="ml-2 px-5 rounded-md bg-gray-100 text-back"
-                                value={keyword}
-                                onChange={e => setKeyword(e.target.value)}
-                            />
-                            <button className="bg-red-500 text-white py-1 px-4 rounded-md ml-2" onClick={handleSearchFilter}>
-                                Search
-                            </button>
-                        </div>
-                    </div>
-                    <button
-                    className="bg-blue-500 text-white px-4 py-2 rounded-md mb-4"
-                    onClick={() => navigate("/admin/add")}
-                >
-                    Create New User
-                </button>
-                </div>
-            </div>
-            <div className="overflow-x-auto">
+<div>
+    <div className="content-wrapper justify-start" >
+            <h2 className="text-3xl font-semibold mb-3">Users</h2>
+    </div>
+    <div className="content-menu  justify-between mb-2">
+    <div className="flex">
+        <input
+            type="text"
+            placeholder="Search"
+            className="ml-2 px-5 rounded-md bg-gray-100 text-back"
+            value={keyword}
+            onChange={e => setKeyword(e.target.value)}
+        />
+        <button className="bg-red-500 text-white py-2 px-4 rounded-md ml-2" onClick={handleSearchFilter}>
+            Search
+        </button>
+    </div>
+    <div className="flex">
+        <button
+            className="bg-blue-500 text-white px-4 py-2 rounded-md ml-2"
+            onClick={() => navigate("/admin/add")}
+        >
+            Create New User
+        </button>
+    </div>
+</div>      
+            <div className='content-table'>
                 <table className="min-w-full border-collapse border border-gray-300">
                     <thead>
                         <tr className="bg-gray-200">

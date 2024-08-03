@@ -9,7 +9,7 @@ import TablePagination from '@mui/material/TablePagination';
 import { CiEdit } from "react-icons/ci";
 import '../../Header.css'; // เพิ่มไฟล์ CSS
 
-export default function OrderListScreen() {
+export default function CancelListScreen() {
   const { data: orders, isLoading, error, refetch } = useGetOrdersQuery();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
@@ -41,13 +41,12 @@ export default function OrderListScreen() {
 
   const handleSearchFilter = () => {
     const filteredOrders = orders.filter(order =>
-      order.status.toLowerCase() === 'pending' && // Filter by status 'Pending'
-      (
-        order._id.toLowerCase().includes(keyword.toLowerCase()) ||
-        order.user.name.toLowerCase().includes(keyword.toLowerCase()) ||
-        order.status.toLowerCase().includes(keyword.toLowerCase())
-      )
+      order.status.toLowerCase() === "cancel" &&
+      (order._id.toLowerCase().includes(keyword.toLowerCase()) ||
+      order.user.name.toLowerCase().includes(keyword.toLowerCase()) ||
+      order.status.toLowerCase().includes(keyword.toLowerCase()))
     );
+
     setFilteredOrders(filteredOrders);
   };
 
@@ -110,7 +109,7 @@ export default function OrderListScreen() {
   return (
     <div>
       <div className="content-wrapper justify-start">
-        <h2 className="text-3xl font-semibold mb-3">Pending Order List</h2>
+        <h2 className="text-3xl font-semibold mb-3">Canceled List</h2>
       </div>
       <div className="content-menu flex justify-between mb-2">
         <div className="flex">
@@ -151,7 +150,7 @@ export default function OrderListScreen() {
                 <td className='px-7 py-3 whitespace-nowrap border'>{new Date(order.createdAt).toLocaleDateString('th', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
                 <td className='px-7 py-3 whitespace-nowrap border'>{new Date(order.shippingAddress.borrowingDate).toLocaleDateString('th', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
                 <td className='px-7 py-3 whitespace-nowrap border'>{new Date(order.shippingAddress.returnDate).toLocaleDateString('th', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
-                <td className={`px-7 py-3 whitespace-nowrap border ${order.status === 'Pending' ? 'text-yellow-500' : ''}`}>{order.status}</td>
+                <td className={`px-7 py-3 whitespace-nowrap border ${order.status === 'Cancel' ? 'text-red-500' : ''}`}>{order.status}</td>
                 <td className='px-7 py-3 whitespace-nowrap border'>
                   <button className='size-100 font-bold py-2 px-4' onClick={() => openModal(order)}>
                     <CiEdit />
@@ -196,7 +195,7 @@ export default function OrderListScreen() {
             marginRight: '-50%',
             transform: 'translate(-50%, -50%)',
             width: '80%',
-            maxWidth: '800px',
+            maxWidth: '800px', // Increase the max width to match OrderScreen
             className: 'content-wrapper'
           }
         }}
@@ -224,14 +223,14 @@ export default function OrderListScreen() {
               </div>
               <div className="mb-4">
                 <h3 className="text-lg font-semibold mb-2">Date:</h3>
-                <p>Borrow Date: {new Date(selectedOrder.shippingAddress.borrowingDate).toLocaleDateString('th', { year: 'numeric', month: '2-digit', day: '2-digit' })}</p>
-                <p>Return Date: {new Date(selectedOrder.shippingAddress.returnDate).toLocaleDateString('th', { year: 'numeric', month: '2-digit', day: '2-digit' })}</p>
+                <p>Borrow Date:{new Date(selectedOrder.shippingAddress.borrowingDate).toLocaleDateString('th', { year: 'numeric', month: '2-digit', day: '2-digit' })}</p>
+                <p>Return Date:{new Date(selectedOrder.shippingAddress.returnDate).toLocaleDateString('th', { year: 'numeric', month: '2-digit', day: '2-digit' })}</p>
               </div>
               <div className="mb-4">
                 <h3 className="text-lg font-semibold mb-2">Status:</h3>
                 <select
-                  value={selectedOrder.status}
-                  onChange={handleStatusChange}
+                  value={selectedOrder.status} 
+                  onChange={handleStatusChange} 
                   className="w-full border border-gray-300 rounded-md px-3 py-2"
                 >
                   <option value="Confirm">Confirm</option>

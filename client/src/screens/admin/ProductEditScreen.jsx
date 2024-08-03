@@ -86,10 +86,10 @@ export default function ProductEditScreen() {
     }
 
     return (
-        <div className='w-1/3 mx-auto'>
-            <h2 className="text-2xl font-semibold mb-4">Edit Product</h2>
-            <form onSubmit={handleSubmit}>
-                <div className="mb-4">
+        <div className='content-wrapper flex flex-col justify-center items-center'>
+            <h2 className="text-2xl font-bold my-2">Edit Item</h2>
+            <form className="w-full max-w-sm" onSubmit={handleSubmit}>
+                <div className="mb-2">
                     <label htmlFor="name" className="block font-medium">
                         Name:
                     </label>
@@ -102,7 +102,7 @@ export default function ProductEditScreen() {
                         className="w-full border border-gray-300 p-2 rounded-md"
                     />
                 </div>
-                <div className="mb-4">
+                <div className="mb-2">
                     <label htmlFor="image" className="block font-medium">
                         Image:
                     </label>
@@ -115,7 +115,7 @@ export default function ProductEditScreen() {
                         className="w-full border border-gray-300 p-2 rounded-md"
                     />
                 </div>
-                <div className="mb-4">
+                <div className="mb-2">
                     <label htmlFor="brand" className="block font-medium">
                         Brand:
                     </label>
@@ -128,7 +128,7 @@ export default function ProductEditScreen() {
                         className="w-full border border-gray-300 p-2 rounded-md"
                     />
                 </div>
-                <div className="mb-4">
+                <div className="mb-2">
                     <label htmlFor="category" className="block font-medium">
                         Category:
                     </label>
@@ -141,7 +141,7 @@ export default function ProductEditScreen() {
                         className="w-full border border-gray-300 p-2 rounded-md"
                     />
                 </div>
-                <div className="mb-4">
+                <div className="mb-2">
                     <label htmlFor="countInStock" className="block font-medium">
                         Count In Stock:
                     </label>
@@ -154,7 +154,7 @@ export default function ProductEditScreen() {
                         className="w-full border border-gray-300 p-2 rounded-md"
                     />
                 </div>
-                <div className="mb-4">
+                <div className="mb-2">
                     <label htmlFor="description" className="block font-medium">
                         Description:
                     </label>
@@ -166,7 +166,7 @@ export default function ProductEditScreen() {
                         className="w-full border border-gray-300 p-2 rounded-md"
                     />
                 </div>
-                <div className="mb-4">
+                <div className="mb-2">
                     <button
                         className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 mr-4"
                         onClick={handleSubmit}
